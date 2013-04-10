@@ -8,7 +8,19 @@ public class HotPosition {
    String distanceString; //距离
    String introString;   //介绍信息
    String timeString;    //到达该地所需时间
-   String detail_posString; //ַ地点详情
+   double longitude; //经度
+   double latitude;   //纬度
+   String path_picString; //图像路径 
+   public HotPosition (String name,String distance,String intro,String time,double longti,double lati,String path )
+   {
+	   this.nameString=name;
+	   this.distanceString=distance;
+	   this.introString=intro;
+	   this.timeString=time;
+	   this.longitude = longti;
+	   this.latitude= lati;
+	   this.path_picString=path;
+   }
    public String getNameString() {
 	return nameString;
 }
@@ -33,10 +45,5 @@ public String getTimeString() {
 public void setTimeString(String timeString) {
 	this.timeString = timeString;
 }
-public String getDetail_posString() {
-	return detail_posString;
-}
-public void setDetail_posString(String detail_posString) {
-	this.detail_posString = detail_posString;
-}
+
 }

@@ -1,7 +1,8 @@
 package org.xdgdg.tripguide_xidian;
 
+import java.util.jar.Attributes.Name;
 
-
+import net.tsz.afinal.FinalDb;
 import android.app.TabActivity;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,9 +14,10 @@ import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-
+@SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {
 	private TabHost mTabHost;
+	private FinalDb db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +25,11 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.activity_main);
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup();
-		//mTabHost.getTabWidget().setDividerDrawable(R.drawable.tab_divider);
-		setupTab(new TextView(this), "Ä¿µÄµØ");
-		setupTab(new TextView(this), "ÎÒµÄÂ·Ïß");
-
+		// mTabHost.getTabWidget().setDividerDrawable(R.drawable.tab_divider);
+		setupTab(new TextView(this), "ç›®çš„åœ°");
+		setupTab(new TextView(this), "æˆ‘çš„è·¯çº¿");
+		db = FinalDb.create(this);
+		
 	}
 
 	@Override
@@ -57,4 +60,5 @@ public class MainActivity extends TabActivity {
 		return view;
 	}
 
+	
 }
