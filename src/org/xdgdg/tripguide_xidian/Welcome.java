@@ -56,7 +56,7 @@ public class Welcome extends Activity {
 		{
 			Toast.makeText(getApplicationContext(), "第一次启动程序，正在导入数据，请稍后", Toast.LENGTH_SHORT).show();
 			db_welcome = FinalDb.create(this); //打开数据库
-			timer.schedule(task, 1000 * 5);
+			timer.schedule(task, 1000 * 4);
 			db_init();
 			Log.i("Firstboot","true");
 		}
@@ -106,7 +106,7 @@ public class Welcome extends Activity {
 			HotPosition temp_pos =new HotPosition(name[i], distance[i], intro[i], time[i], longti[i], lati[i],path[i]);
 			db_welcome.save(temp_pos);
 		}
-		Log.w("导入", "导入结束");
+		Log.e("导入", "导入结束");
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.jar.Attributes.Name;
 import net.tsz.afinal.FinalDb;
 import android.app.TabActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,9 +26,13 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.activity_main);
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup();
+		View tabview1 = createTabView(mTabHost.getContext(), "目的地");
+		View tabview2 = createTabView(mTabHost.getContext(), "我的路线");
 		// mTabHost.getTabWidget().setDividerDrawable(R.drawable.tab_divider);
-		setupTab(new TextView(this), "目的地");
-		setupTab(new TextView(this), "我的路线");
+		//setupTab(new TextView(this), "目的地");
+		//setupTab(new TextView(this), "我的路线");
+		mTabHost.addTab(mTabHost.newTabSpec("目的地").setIndicator(tabview1).setContent(new Intent(this,DestinationActivity.class)));
+		mTabHost.addTab(mTabHost.newTabSpec("我的路线").setIndicator(tabview2).setContent(new Intent(this,MyRouteActivity.class)));
 		db = FinalDb.create(this);
 		
 	}
