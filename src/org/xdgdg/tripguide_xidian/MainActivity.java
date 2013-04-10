@@ -23,7 +23,7 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.activity_main);
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup();
-		mTabHost.getTabWidget().setDividerDrawable(R.drawable.tab_divider);
+		//mTabHost.getTabWidget().setDividerDrawable(R.drawable.tab_divider);
 		setupTab(new TextView(this), "目的地");
 		setupTab(new TextView(this), "我的路线");
 
