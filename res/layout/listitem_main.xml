@@ -38,6 +38,7 @@
         android:layout_alignLeft="@+id/picture_pos"
         android:layout_below="@+id/picture_pos"
         android:text="距离"
-        android:textColor="#989898" />
+        android:textColor="#989898"
+        android:paddingLeft="5dp" />
 
 </RelativeLayout>

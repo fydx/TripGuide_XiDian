@@ -1,12 +1,16 @@
 package org.xdgdg.tripguide_xidian;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.tsz.afinal.FinalDb;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,21 +24,59 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class DestinationActivity extends Activity {
+
+	//private List<Bitmap> pics=null;
+	//private ImageView img;
 	private SimpleAdapter mSchedule;
-	// private TextView distanceTextView,nameTextView;
+	//private TextView distanceTextView,nameTextView;
 	private FinalDb db;
 	private List<Map<String, Object>> mData;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_destination);
-		ListView listView = (ListView) findViewById(R.id.listView_main);
-		// 数据库查询
-		db = FinalDb.create(this);
+		ListView listView= (ListView)findViewById(R.id.listView_main);
+		/*img=(ImageView) findViewById(R.id.picture_pos);
+		distanceTextView=(TextView)findViewById(R.id.distance);
+		nameTextView= (TextView)findViewById(R.id.position_name);*/
+		//positions= new  ArrayList<HotPosition>();
+		//数据库查询
+		db=FinalDb.create(this);
 		List<HotPosition> positions = db.findAll(HotPosition.class);
-		Log.e("pos size", String.valueOf(positions.size()));
-		Log.e("pos1", positions.get(0).getNameString());
+		Log.e("pos size",String.valueOf(positions.size()));
+		//Log.e("pos1", positions.get(0).getNameString());
+		
+		Resources res = getResources();
+		
+		mData= new ArrayList<Map<String, Object>>();
+		for(HotPosition pos: positions)
+		{
+			Log.i("info",pos.getNameString());
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			Bitmap bm= BitmapFactory.decodeResource(res, pos.getDrawable_id());
+			map.put("name", pos.getNameString());
+			map.put("distance", pos.getDistanceString());
+			map.put("pic",bm);
+			mData.add(map);
+			
+		}
+		mSchedule = new ImageSimpleAdapter(this, // 没什么解释
+				mData,// 数据来源
+				R.layout.listitem_main,// ListItem的XML实现
+
+				// 动态数组与ListItem对应的子项
+				new String[] { "name", "distance",
+						"pic"},
+
+				// ListItem的XML文件里面的两个TextView ID
+				new int[] { R.id.position_name, R.id.distance,
+						R.id.picture_pos});
+		// 添加并且显示
+		listView.setDividerHeight(0);
+		listView.setAdapter(mSchedule);
+		
+		
+	
 	}
 
 	@Override
@@ -43,8 +85,7 @@ public class DestinationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.destination, menu);
 		return true;
 	}
-
-	// listview 加载的adapter
+	//listview 加载的adapter
 	public class ImageSimpleAdapter extends SimpleAdapter {
 		private int[] mTo;
 		private String[] mFrom;
@@ -55,8 +96,8 @@ public class DestinationActivity extends Activity {
 		private LayoutInflater mInflater;
 
 		public ImageSimpleAdapter(Context context,
-				List<? extends Map<String, ?>> data, int resource,
-				String[] from, int[] to) {
+				List<? extends Map<String, ?>> data, int resource, String[] from,
+				int[] to) {
 			super(context, data, resource, from, to);
 			mTo = to;
 			mFrom = from;
@@ -67,13 +108,11 @@ public class DestinationActivity extends Activity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			return createViewFromResource(position, convertView, parent,
-					mResource);
+			return createViewFromResource(position, convertView, parent, mResource);
 		}
 
 		@Override
-		public View getDropDownView(int position, View convertView,
-				ViewGroup parent) {
+		public View getDropDownView(int position, View convertView, ViewGroup parent) {
 			return createViewFromResource(position, convertView, parent,
 					mDropDownResource);
 		}
@@ -122,18 +161,17 @@ public class DestinationActivity extends Activity {
 							if (data instanceof Boolean) {
 								((Checkable) v).setChecked((Boolean) data);
 							} else if (v instanceof TextView) {
-								// Note: keep the instanceof TextView check at
-								// the
+								// Note: keep the instanceof TextView check at the
 								// bottom of these
 								// ifs since a lot of views are TextViews (e.g.
 								// CheckBoxes).
 								setViewText((TextView) v, text);
 							} else {
-								throw new IllegalStateException(
-										v.getClass().getName()
-												+ " should be bound to a Boolean, not a "
-												+ (data == null ? "<unknown type>"
-														: data.getClass()));
+								throw new IllegalStateException(v.getClass()
+										.getName()
+										+ " should be bound to a Boolean, not a "
+										+ (data == null ? "<unknown type>"
+												: data.getClass()));
 							}
 						} else if (v instanceof TextView) {
 							// Note: keep the instanceof TextView check at the
@@ -169,5 +207,5 @@ public class DestinationActivity extends Activity {
 			v.setImageBitmap(bitmap);
 		}
 
-	}
+ }
 }
