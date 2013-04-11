@@ -3,10 +3,12 @@ package org.xdgdg.tripguide_xidian;
 import java.util.List;
 import java.util.Map;
 
-import android.os.Bundle;
+import net.tsz.afinal.FinalDb;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -16,16 +18,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.SimpleAdapter.ViewBinder;
 
 public class DestinationActivity extends Activity {
+	private SimpleAdapter mSchedule;
+	// private TextView distanceTextView,nameTextView;
+	private FinalDb db;
+	private List<Map<String, Object>> mData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_destination);
-		ListView listView= (ListView)findViewById(R.id.listView_main);
-		
+		ListView listView = (ListView) findViewById(R.id.listView_main);
+		// 数据库查询
+		db = FinalDb.create(this);
+		List<HotPosition> positions = db.findAll(HotPosition.class);
+		Log.e("pos size", String.valueOf(positions.size()));
+		Log.e("pos1", positions.get(0).getNameString());
 	}
 
 	@Override
@@ -34,7 +43,8 @@ public class DestinationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.destination, menu);
 		return true;
 	}
-	//listview 加载的adapter
+
+	// listview 加载的adapter
 	public class ImageSimpleAdapter extends SimpleAdapter {
 		private int[] mTo;
 		private String[] mFrom;
@@ -45,8 +55,8 @@ public class DestinationActivity extends Activity {
 		private LayoutInflater mInflater;
 
 		public ImageSimpleAdapter(Context context,
-				List<? extends Map<String, ?>> data, int resource, String[] from,
-				int[] to) {
+				List<? extends Map<String, ?>> data, int resource,
+				String[] from, int[] to) {
 			super(context, data, resource, from, to);
 			mTo = to;
 			mFrom = from;
@@ -57,11 +67,13 @@ public class DestinationActivity extends Activity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			return createViewFromResource(position, convertView, parent, mResource);
+			return createViewFromResource(position, convertView, parent,
+					mResource);
 		}
 
 		@Override
-		public View getDropDownView(int position, View convertView, ViewGroup parent) {
+		public View getDropDownView(int position, View convertView,
+				ViewGroup parent) {
 			return createViewFromResource(position, convertView, parent,
 					mDropDownResource);
 		}
@@ -110,17 +122,18 @@ public class DestinationActivity extends Activity {
 							if (data instanceof Boolean) {
 								((Checkable) v).setChecked((Boolean) data);
 							} else if (v instanceof TextView) {
-								// Note: keep the instanceof TextView check at the
+								// Note: keep the instanceof TextView check at
+								// the
 								// bottom of these
 								// ifs since a lot of views are TextViews (e.g.
 								// CheckBoxes).
 								setViewText((TextView) v, text);
 							} else {
-								throw new IllegalStateException(v.getClass()
-										.getName()
-										+ " should be bound to a Boolean, not a "
-										+ (data == null ? "<unknown type>"
-												: data.getClass()));
+								throw new IllegalStateException(
+										v.getClass().getName()
+												+ " should be bound to a Boolean, not a "
+												+ (data == null ? "<unknown type>"
+														: data.getClass()));
 							}
 						} else if (v instanceof TextView) {
 							// Note: keep the instanceof TextView check at the
@@ -156,5 +169,5 @@ public class DestinationActivity extends Activity {
 			v.setImageBitmap(bitmap);
 		}
 
- }
+	}
 }

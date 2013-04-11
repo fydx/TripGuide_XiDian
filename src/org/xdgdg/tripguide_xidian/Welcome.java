@@ -98,12 +98,14 @@ public class Welcome extends Activity {
 		double lati[]={
 				34.2594,34.2230
 		};
-		String path[]={
-				"dongdajie","xiaozhai"
+		int path[]={
+			R.drawable.dongdajie,R.drawable.xiaozhai
 		};
 		for(int i=0;i<name.length;i++)
 		{
 			HotPosition temp_pos =new HotPosition(name[i], distance[i], intro[i], time[i], longti[i], lati[i],path[i]);
+			Log.i("hot",temp_pos.getNameString()
+					);
 			db_welcome.save(temp_pos);
 		}
 		Log.e("导入", "导入结束");
