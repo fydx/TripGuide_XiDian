@@ -55,7 +55,7 @@ public class DestinationActivity extends Activity {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			Bitmap bm= BitmapFactory.decodeResource(res, pos.getDrawable_id());
 			map.put("name", pos.getNameString());
-			map.put("distance", pos.getDistanceString());
+			map.put("distance", "距离西电"+pos.getDistanceString());
 			map.put("pic",bm);
 			mData.add(map);
 			

@@ -13,9 +13,10 @@
 
     <ImageView
         android:id="@+id/picture_pos"
-        android:layout_width="294dp"
+        android:layout_width="270dp"
         android:layout_height="139dp"
         android:paddingTop="10dp"
+        android:paddingRight="2dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/dongdajie" />
@@ -29,7 +30,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:text="地点名称" 
-        android:textSize="15dp"/>
+        android:textSize="13dp"
+         />
 
     <TextView
         android:id="@+id/distance"
@@ -37,8 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/picture_pos"
         android:layout_below="@+id/picture_pos"
+        android:paddingLeft="5dp"
         android:text="距离"
         android:textColor="#989898"
-        android:paddingLeft="5dp" />
+        android:textSize="9dp" />
 
 </RelativeLayout>
