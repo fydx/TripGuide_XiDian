@@ -3,6 +3,7 @@ package com.baidu.map_tool;
 import org.xdgdg.tripguide_xidian.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +43,9 @@ public class mapActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.map);
-
+		Intent intent=getIntent();
+		double pos_x = intent.getDoubleExtra("pos_x", 34.0000);
+		double pos_y = intent.getDoubleExtra("pos_y", 108.0000);
 		map_view = (MapView) findViewById(R.id.bmapsView);
 		map_controller = map_view.getController();
 
