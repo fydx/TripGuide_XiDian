@@ -28,7 +28,7 @@ public class MainActivity extends TabActivity {
 		//setupTab(new TextView(this), "我的路线");
 		mTabHost.addTab(mTabHost.newTabSpec("目的地").setIndicator(tabview1).setContent(new Intent(this,DestinationActivity.class)));
 		mTabHost.addTab(mTabHost.newTabSpec("我的路线").setIndicator(tabview2).setContent(new Intent(this,MyRouteActivity.class)));
-//		mTabHost.addTab(mTabHost.newTabSpec("我的地图").setIndicator(tabview2).setContent(new Intent(this,mapActivity.class)));
+      //mTabHost.addTab(mTabHost.newTabSpec("我的地图").setIndicator(tabview2).setContent(new Intent(this,mapActivity.class)));
 
 		
 	}
