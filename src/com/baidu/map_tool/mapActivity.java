@@ -3,6 +3,7 @@ package com.baidu.map_tool;
 import org.xdgdg.tripguide_xidian.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +23,7 @@ public class mapActivity extends Activity {
 
 	// private double mLat1 = 34.132008;
 	// private double mLon1 = 108.844008;
-	//西電34.12309, 108.84179
+	// 西電34.12309, 108.84179
 	private double mLat1 = 34.2230;
 	private double mLon1 = 108.9467;
 
@@ -30,11 +31,16 @@ public class mapActivity extends Activity {
 	private MapView map_view = null;
 
 	private Button btn_test = null;
-	private MKOfflineMap mOffline = null; 
+	private MKOfflineMap mOffline = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		String str = bundle.getString("str");
+
 		MapBase mapbase = MapBase.Instance(this);
 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -53,19 +59,20 @@ public class mapActivity extends Activity {
 		// amask.p2p_bywalk(new GeoPoint((int)(34.2230 * 1e6),(int)(108.9467 *
 		// 1e6)),
 		// new GeoPoint((int)(34.2441 * 1e6),(int)(108.9635 * 1e6)));
-		//		amask.p2p_bycar(34.2230,108.9467,34.2441,108.9635);
+		// amask.p2p_bycar(34.2230,108.9467,34.2441,108.9635);
 		// amask.p2p_line(34.2230, 108.9467, 34.2441, 108.9635);
 		// amask.cover_point(34.132008,108.844008);
-		
+
 		btn_test = (Button) findViewById(R.id.search);
-		btn_test.setOnClickListener(new OnClickListener(){
+		btn_test.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-//				amask.p2p_bywalk(34.2230,108.9467,34.2441,108.9635);
-				amask.p2p_bybus(34.12203,108.84047,34.2441,108.9635);
+				amask.p2p_bywalk(34.2230, 108.9467, 34.2441, 108.9635);
+
+				// amask.p2p_bybus(34.12203,108.84047,34.2441,108.9635);
 			}
-			
+
 		});
 	}
 
