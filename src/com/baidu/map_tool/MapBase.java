@@ -12,8 +12,15 @@ public class MapBase {
 	private BMapManager mBMapManager = null;
 	private static MapBase mInstance = null;
 
+	public void onTerminate() {
+		if (mBMapManager != null) {
+			mBMapManager.destroy();
+			mBMapManager = null;
+		}
+	}
+
 	public static MapBase Instance(Context context) {
-		Log.i("axlecho", "instance ing");
+		Log.i("axlecho", "instance.");
 		if (mInstance == null) {
 			mInstance = new MapBase(context);
 		}

@@ -61,7 +61,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int xiaozhai=0x7f02000f;
     }
     public static final class id {
-        public static final int action_settings=0x7f090015;
+        public static final int action_settings=0x7f090016;
         public static final int bmapsView=0x7f090013;
         public static final int button_set=0x7f090001;
         public static final int detail_area=0x7f090006;
@@ -82,7 +82,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int position_name=0x7f09000e;
         public static final int route_date=0x7f090011;
         public static final int route_detail=0x7f090012;
-        public static final int tabsText=0x7f090014;
+        public static final int search=0x7f090014;
+        public static final int tabsText=0x7f090015;
     }
     public static final class layout {
         public static final int activity_destination=0x7f030000;

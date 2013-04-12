@@ -5,13 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.xdgdg.tripguide_xidian.DestinationActivity.ImageSimpleAdapter;
-
-import com.baidu.map_tool.mapActivity;
-
 import net.tsz.afinal.FinalDb;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;

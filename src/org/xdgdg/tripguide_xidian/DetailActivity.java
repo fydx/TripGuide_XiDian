@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.map_tool.mapActivity;
+
 public class DetailActivity extends Activity {
 	private FinalDb db_detail;
 	private HotPosition pos;
@@ -44,7 +46,9 @@ public class DetailActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				Intent intent= new Intent();
+				intent.setClass(DetailActivity.this,mapActivity.class);
+				startActivity(intent);
 				
 			}
 		});
