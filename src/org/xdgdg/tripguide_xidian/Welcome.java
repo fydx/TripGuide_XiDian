@@ -58,6 +58,7 @@ public class Welcome extends Activity {
 			db_welcome = FinalDb.create(this); //打开数据库
 			timer.schedule(task, 1000 * 4);
 			db_init();
+			db_my_init();
 			Log.i("Firstboot","true");
 		}
 	}
@@ -116,5 +117,11 @@ public class Welcome extends Activity {
 		}
 		Log.e("导入", "导入结束");
 	}
-
+	private void db_my_init(){
+		String dateString = "2013-04-12";
+		String detailString= "916";
+		route route= new route(dateString, detailString);
+		db_welcome.save(route);
+	}
+   
 }

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">西电出行指南</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">设置</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_welcome">西电出行指南</string>
     <string name="title_activity_destination">目的地选择</string>

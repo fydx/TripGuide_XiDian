@@ -6,13 +6,13 @@
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="110dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/listitem_my_bg" />
 
     <TextView
-        android:id="@+id/route_time"
+        android:id="@+id/route_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -22,11 +22,12 @@
         android:text="录入时间" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/route_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/route_time"
-        android:layout_below="@+id/route_time"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/route_date"
         android:text="行程安排" />
 
 </RelativeLayout>

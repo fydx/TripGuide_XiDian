@@ -27,7 +27,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class DestinationActivity extends Activity {
-
 	//private List<Bitmap> pics=null;
 	//private ImageView img;
 	private SimpleAdapter mSchedule;
