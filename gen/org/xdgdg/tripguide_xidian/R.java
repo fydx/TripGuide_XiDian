@@ -44,19 +44,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class drawable {
         public static final int cropdongdajie=0x7f020000;
-        public static final int detailforbottom=0x7f020001;
-        public static final int detailpicforcontent=0x7f020002;
-        public static final int detailpicforname=0x7f020003;
-        public static final int dongdajie=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int listitem_bg=0x7f020006;
-        public static final int tab_bg_selected=0x7f020007;
-        public static final int tab_bg_selector=0x7f020008;
-        public static final int tab_bg_unselected=0x7f020009;
-        public static final int tab_divider=0x7f02000a;
-        public static final int tab_text_selector=0x7f02000b;
-        public static final int welcome=0x7f02000c;
-        public static final int xiaozhai=0x7f02000d;
+        public static final int cropxiaozhai=0x7f020001;
+        public static final int detailforbottom=0x7f020002;
+        public static final int detailpicforcontent=0x7f020003;
+        public static final int detailpicforname=0x7f020004;
+        public static final int dongdajie=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int listitem_bg=0x7f020007;
+        public static final int tab_bg_selected=0x7f020008;
+        public static final int tab_bg_selector=0x7f020009;
+        public static final int tab_bg_unselected=0x7f02000a;
+        public static final int tab_divider=0x7f02000b;
+        public static final int tab_text_selector=0x7f02000c;
+        public static final int welcome=0x7f02000d;
+        public static final int xiaozhai=0x7f02000e;
     }
     public static final class id {
         public static final int action_settings=0x7f090011;

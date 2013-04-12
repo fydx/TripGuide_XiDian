@@ -1,6 +1,5 @@
 package org.xdgdg.tripguide_xidian;
 
-import net.tsz.afinal.FinalDb;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,16 +8,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TabHost;
-import android.widget.TabHost.TabContentFactory;
-import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-
-import com.baidu.map_tool.mapActivity;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {
 	private TabHost mTabHost;
-	private FinalDb db;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +29,7 @@ public class MainActivity extends TabActivity {
 		mTabHost.addTab(mTabHost.newTabSpec("目的地").setIndicator(tabview1).setContent(new Intent(this,DestinationActivity.class)));
 		mTabHost.addTab(mTabHost.newTabSpec("我的路线").setIndicator(tabview2).setContent(new Intent(this,MyRouteActivity.class)));
 //		mTabHost.addTab(mTabHost.newTabSpec("我的地图").setIndicator(tabview2).setContent(new Intent(this,mapActivity.class)));
-	//	db = FinalDb.create(this);
+
 		
 	}
 
@@ -45,7 +40,7 @@ public class MainActivity extends TabActivity {
 		return true;
 	}
 
-	private void setupTab(final View view, final String tag) {
+	/*private void setupTab(final View view, final String tag) {
 		View tabview = createTabView(mTabHost.getContext(), tag);
 
 		TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview)
@@ -56,7 +51,7 @@ public class MainActivity extends TabActivity {
 				});
 		mTabHost.addTab(setContent);
 
-	}
+	}*/
 
 	private static View createTabView(final Context context, final String text) {
 		View view = LayoutInflater.from(context)

@@ -92,6 +92,9 @@ public class Welcome extends Activity {
 		String time[]={
 				"1小时40分钟","1小时20分钟"
 		};
+		String area[]={
+				"碑林区","雁塔区"
+		};
 		double longti[]={
 				108.9485,108.9467
 		};
@@ -101,9 +104,12 @@ public class Welcome extends Activity {
 		int path[]={
 			R.drawable.dongdajie,R.drawable.xiaozhai
 		};
+		int path_small[]={
+				R.drawable.cropdongdajie,R.drawable.cropxiaozhai
+		};
 		for(int i=0;i<name.length;i++)
 		{
-			HotPosition temp_pos =new HotPosition(name[i], distance[i], intro[i], time[i], longti[i], lati[i],path[i]);
+			HotPosition temp_pos =new HotPosition(name[i], distance[i], intro[i], time[i], area[i],longti[i], lati[i],path[i],path_small[i]);
 			Log.i("hot",temp_pos.getNameString()
 					);
 			db_welcome.save(temp_pos);

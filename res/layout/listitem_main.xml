@@ -42,6 +42,6 @@
         android:paddingLeft="5dp"
         android:text="距离"
         android:textColor="#989898"
-        android:textSize="9dp" />
+        android:textSize="11dp" />
 
 </RelativeLayout>

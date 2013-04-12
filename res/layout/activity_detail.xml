@@ -65,7 +65,7 @@
         android:layout_alignLeft="@+id/pic_bottom_name"
         android:layout_below="@+id/detail_name"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="6dp"
         android:text="XX区 XX路" />
 
     <TextView
@@ -74,7 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/detail_area"
         android:layout_below="@+id/detail_area"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="6dp"
+        android:textSize="13dp"
         android:text="距离" />
 
     <TextView
@@ -83,7 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/detail_distance"
         android:layout_below="@+id/detail_distance"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="6dp"
+        android:textSize="13dp"
         android:text="到达需用时间" />
 
     <ImageView
@@ -102,8 +104,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/pic_detailcontent"
         android:layout_below="@+id/pic_detail_bottom"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
         android:text="详情" />
 
 </RelativeLayout>
