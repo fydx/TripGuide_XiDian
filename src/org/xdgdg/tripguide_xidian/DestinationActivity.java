@@ -8,6 +8,7 @@ import java.util.Map;
 import net.tsz.afinal.FinalDb;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,6 +31,7 @@ public class DestinationActivity extends Activity {
 	//private List<Bitmap> pics=null;
 	//private ImageView img;
 	private SimpleAdapter mSchedule;
+	private List<HotPosition> positions=null;
 	//private TextView distanceTextView,nameTextView;
 	private FinalDb db;
 	private List<Map<String, Object>> mData;
@@ -42,7 +46,7 @@ public class DestinationActivity extends Activity {
 		//positions= new  ArrayList<HotPosition>();
 		//数据库查询
 		db=FinalDb.create(this);
-		List<HotPosition> positions = db.findAll(HotPosition.class);
+		positions = db.findAll(HotPosition.class);
 		Log.e("pos size",String.valueOf(positions.size()));
 		//Log.e("pos1", positions.get(0).getNameString());
 		
@@ -54,6 +58,9 @@ public class DestinationActivity extends Activity {
 			Log.i("info",pos.getNameString());
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			Bitmap bm= BitmapFactory.decodeResource(res, pos.getDrawable_id());
+		//	int width=250;
+		//	int height=bm.getHeight();
+		//	Bitmap resizedbm=Bitmap.createBitmap(bm,0,0, width, height);
 			map.put("name", pos.getNameString());
 			map.put("distance", "距离西电"+pos.getDistanceString());
 			map.put("pic",bm);
@@ -74,7 +81,14 @@ public class DestinationActivity extends Activity {
 		// 添加并且显示
 		listView.setDividerHeight(0);
 		listView.setAdapter(mSchedule);
-		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {  
+		        Intent intent = new Intent(getApplicationContext(), DetailActivity.class); 
+		        intent.putExtra("PosfromMain",positions.get(position).getId() );
+		        startActivity(intent);   
+		     }  
+		});
 		
 	
 	}

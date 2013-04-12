@@ -37,12 +37,14 @@
             android:name="org.xdgdg.tripguide_xidian.MyRouteActivity"
             android:label="@string/title_activity_my_route" >
         </activity>
-        
         <activity
             android:name="com.baidu.map_tool.mapActivity"
-            android:label="map">
+            android:label="map" >
         </activity>
-        
+        <activity
+            android:name="org.xdgdg.tripguide_xidian.DetailActivity"
+            android:label="@string/title_activity_detail" >
+        </activity>
     </application>
 
 </manifest>
