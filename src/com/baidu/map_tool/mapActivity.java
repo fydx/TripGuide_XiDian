@@ -48,7 +48,9 @@ public class mapActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.map);
-
+		Intent intent=getIntent();
+		double pos_x = intent.getDoubleExtra("pos_x", 34.0000);
+		double pos_y = intent.getDoubleExtra("pos_y", 108.0000);
 		map_view = (MapView) findViewById(R.id.bmapsView);
 		map_controller = map_view.getController();
 

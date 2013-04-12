@@ -48,9 +48,11 @@ public class DetailActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent= new Intent();
 				intent.setClass(DetailActivity.this,mapActivity.class);
+				intent.putExtra("pos_x", pos.getLongitude());
+				intent.putExtra("pos_y", pos.getLatitude());
 				startActivity(intent);
-				
-			}
+			
+			} 
 		});
 	}
 
