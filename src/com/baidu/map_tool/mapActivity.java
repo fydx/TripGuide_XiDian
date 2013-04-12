@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 
 public class mapActivity extends Activity {
 	protected static final int INQUIREFIRSTLINE = 0x101;
-	
 	// 原缩放级别
 	private final int zoom_level = 17;
 
@@ -38,14 +36,14 @@ public class mapActivity extends Activity {
 	private double tar_pt_x = 0;
 	private double tar_pt_y = 0;
 
-	private MapView map_view = null;
-	private Button btn_test = null;
+	MapView map_view = null;
+	Button btn_test = null;
+	TextView tex_tip = null;
 
 	private MapController map_controller = null;
 	private MKOfflineMap mOffline = null;
 	MapMask amask;
-	
-	@Override
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -63,6 +61,9 @@ public class mapActivity extends Activity {
 		Log.i("axlecho", "pos_x:" + String.valueOf(tar_pt_x) + "pos_y:"
 				+ String.valueOf(tar_pt_y));
 
+		tex_tip = (TextView) findViewById(R.id.busline_detail);
+		tex_tip.setText("loading");
+
 		map_view = (MapView) findViewById(R.id.bmapsView);
 		map_controller = map_view.getController();
 
@@ -71,12 +72,13 @@ public class mapActivity extends Activity {
 
 		// 设置起始
 		setbegin();
-		
-		//地图图形处理工具
-		amask = new MapMask(this, map_view);
-		
-		//启动初始化查询
-		new Thread(new LooperThread()).start();  
+
+		// 地图图形处理工具
+		amask = new MapMask(this);
+
+		// 启动初始化查询
+		new Thread(new LooperThread()).start();
+
 	}
 
 	@Override
@@ -86,11 +88,11 @@ public class mapActivity extends Activity {
 	}
 
 	@Override
-	protected void onStart(){
+	protected void onStart() {
 
 		super.onStart();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		map_view.onResume();
@@ -138,13 +140,12 @@ public class mapActivity extends Activity {
 		Log.i("axlecho", "the offline packet number:" + String.valueOf(num));
 
 	}
-	
+
 	private class LooperThread extends Thread {
-		public Handler mHandler;
 
 		public void run() {
 			try {
-				Thread.sleep(1500);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -153,12 +154,11 @@ public class mapActivity extends Activity {
 			Message message = new Message();
 			message.what = mapActivity.INQUIREFIRSTLINE;
 
-			mapActivity.this.myHandler.sendMessage(message);
-
+			mapActivity.this.event_handle.sendMessage(message);
 		}
 	};
 
-	private Handler myHandler = new Handler() {
+	private Handler event_handle = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case mapActivity.INQUIREFIRSTLINE:
@@ -168,6 +168,5 @@ public class mapActivity extends Activity {
 			super.handleMessage(msg);
 		}
 	};
-	
-	}
 
+}

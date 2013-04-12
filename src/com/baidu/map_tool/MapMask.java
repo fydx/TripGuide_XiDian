@@ -2,14 +2,16 @@ package com.baidu.map_tool;
 
 import java.util.ArrayList;
 
+import org.xdgdg.tripguide_xidian.R;
+
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.baidu.mapapi.map.Geometry;
 import com.baidu.mapapi.map.Graphic;
 import com.baidu.mapapi.map.GraphicsOverlay;
 import com.baidu.mapapi.map.LocationData;
-import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationOverlay;
 import com.baidu.mapapi.map.RouteOverlay;
 import com.baidu.mapapi.map.Symbol;
@@ -30,27 +32,25 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 public class MapMask {
 
 	private final int POINTSIZE = 10;
-	private MapView mMapView = null;
-	private Activity mparent = null;
+	private mapActivity mparent = null;
 
-	
 	private GraphicsOverlay graphicsOverlay = null;
 
 	private void check_masklayout() {
 		// add new layout
 		if (graphicsOverlay == null) {
-			graphicsOverlay = new GraphicsOverlay(mMapView);
-			mMapView.getOverlays().add(graphicsOverlay);
+			graphicsOverlay = new GraphicsOverlay(mparent.map_view);
+			mparent.map_view.getOverlays().add(graphicsOverlay);
 		}
 	}
 
-	public MapMask(Activity _parent, MapView _mapview) {
-		mMapView = _mapview;
-		mparent = _parent;
+	public MapMask(Activity _parent) {
+		mparent = (mapActivity) _parent;
 	}
 
 	private void SetScrpos(double pos_x, double pos_y) {
-		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(mMapView);
+		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
+				mparent.map_view);
 		LocationData locData = new LocationData();
 
 		locData.latitude = pos_x;
@@ -58,11 +58,16 @@ public class MapMask {
 		locData.direction = 200.0f;
 		myLocationOverlay.setData(locData);
 
-		mMapView.getOverlays().add(myLocationOverlay);
-		mMapView.refresh();
-		mMapView.getController().animateTo(
+		mparent.map_view.getOverlays().add(myLocationOverlay);
+		mparent.map_view.refresh();
+		mparent.map_view.getController().animateTo(
 				new GeoPoint((int) (locData.latitude * 1e6),
 						(int) (locData.longitude * 1e6)));
+	}
+
+	private void setupinfo(double start_x, double start_y, double end_x,
+			double end_y) {
+
 	}
 
 	public void p2p_line(double start_x, double start_y, double end_x,
@@ -94,11 +99,14 @@ public class MapMask {
 		Graphic lineGraphic = new Graphic(lineGeometry, lineSymbol);
 
 		graphicsOverlay.setData(lineGraphic);
-		mMapView.refresh();
+		mparent.map_view.refresh();
 	}
 
 	public void p2p_bywalk(double start_x, double start_y, double end_x,
 			double end_y) {
+
+		setupinfo(start_x, start_y, end_x, end_y);
+
 		GeoPoint start = new GeoPoint((int) (start_x * 1e6),
 				(int) (start_y * 1e6));
 		GeoPoint end = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
@@ -127,16 +135,11 @@ public class MapMask {
 		mSearch.init(MapBase.Instance(null).getMapManager(),
 				new resultListener());
 
-
-		
 		MKPlanNode node_start = new MKPlanNode();
-//		node_start.pt = start;
 		node_start.name = "西安电子科技大学(南校区)";
-		
 
 		MKPlanNode node_end = new MKPlanNode();
 		node_end.pt = end;
-//		node_end.name = "小寨";
 
 		mSearch.transitSearch("西安", node_start, node_end);
 		Log.i("axlecho", "p2p_bybus ok");
@@ -184,7 +187,7 @@ public class MapMask {
 		Graphic circleGraphic = new Graphic(circleGeometry, circleSymbol);
 
 		graphicsOverlay.setData(circleGraphic);
-		mMapView.refresh();
+		mparent.map_view.refresh();
 	}
 
 	public void cover_point(double point_x, double point_y) {
@@ -209,14 +212,19 @@ public class MapMask {
 		Graphic pointGraphic = new Graphic(pointGeometry, pointSymbol);
 
 		graphicsOverlay.setData(pointGraphic);
-		mMapView.refresh();
+		mparent.map_view.refresh();
 	}
 
+	public void cover_pic(double point_x,double point_y){
+//		Drawable marker = mparent.getResources().getDrawable(R.drawable.sketchy_weather_12); //得到需要标在地图上的资源
+//		mparent.map_view.getOverlays().add(new OverItemT(marker, this)); //添加ItemizedOverlay实例到mMapView
+//		mMapView.refresh()//刷新地图
+	}
 	class resultListener implements MKSearchListener {
 
 		@Override
 		public void onGetPoiDetailSearchResult(int type, int error) {
-			Log.i("axlecho","onGetPoiDetailSearchResult is ok");
+			Log.i("axlecho", "onGetPoiDetailSearchResult is ok");
 		}
 
 		@Override
@@ -226,7 +234,7 @@ public class MapMask {
 				Log.i("axlecho", "result is null.");
 				return;
 			}
-			Log.i("axlecho","onGetAddrResult is ok");
+			Log.i("axlecho", "onGetAddrResult is ok");
 		}
 
 		@Override
@@ -236,7 +244,7 @@ public class MapMask {
 				Log.i("axlecho", "result is null.");
 				return;
 			}
-			Log.i("axlecho","onGetBusDetailResult is ok");
+			Log.i("axlecho", "onGetBusDetailResult is ok");
 		}
 
 		@Override
@@ -249,10 +257,11 @@ public class MapMask {
 			}
 
 			Log.i("axlecho", "onGetDrivingRouteResult is ok");
-			RouteOverlay routeOverlay = new RouteOverlay(mparent, mMapView);
+			RouteOverlay routeOverlay = new RouteOverlay(mparent,
+					mparent.map_view);
 			routeOverlay.setData(result.getPlan(0).getRoute(0));
-			mMapView.getOverlays().add(routeOverlay);
-			mMapView.refresh();
+			mparent.map_view.getOverlays().add(routeOverlay);
+			mparent.map_view.refresh();
 		}
 
 		@Override
@@ -283,25 +292,25 @@ public class MapMask {
 				return;
 			}
 			Log.i("axlecho", "onGetTransitRouteResult ok.");
-			TransitOverlay routeOverlay = new TransitOverlay(mparent, mMapView);
+			TransitOverlay routeOverlay = new TransitOverlay(mparent,
+					mparent.map_view);
 			// 此处仅展示一个方案作为示例
 			routeOverlay.setData(result.getPlan(0));
-//			mMapView.getOverlays().clear();
-			mMapView.getOverlays().add(routeOverlay);
-			mMapView.refresh();
-			Log.i("axlecho","i get here.");
-			
-			Log.i("axlecho",String.valueOf(result.getPlan(0).getDistance()));
-			Log.i("axlecho","content" + result.getPlan(0).getContent());
-			Log.i("axlecho","Uid" + result.getPlan(0).getLine(0).getUid());
-			Log.i("axlecho","OnStop" + result.getPlan(0).getLine(0).getGetOnStop().name);
-			Log.i("axlecho","OffStop" + result.getPlan(0).getLine(0).getGetOffStop().name);	
-			Log.i("axlecho","Tip" + result.getPlan(0).getLine(0).getTip());
-			
+			// mparent.map_view.getOverlays().clear();
+			mparent.map_view.getOverlays().add(routeOverlay);
+			mparent.map_view.refresh();
+			Log.i("axlecho", "i get here.");
+
+			String tmp = result.getPlan(0).getLine(0).getTip();
+			Log.i("axlecho", tmp);
+
+			if (mparent.tex_tip != null)
+				mparent.tex_tip.setText(tmp);
+
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
-			mMapView.getController().zoomToSpan(routeOverlay.getLatSpanE6(),
-					routeOverlay.getLonSpanE6());
-			mMapView.getController().animateTo(result.getStart().pt);
+			mparent.map_view.getController().zoomToSpan(
+					routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());
+			mparent.map_view.getController().animateTo(result.getStart().pt);
 
 		}
 
@@ -315,7 +324,8 @@ public class MapMask {
 			}
 
 			Log.i("axlecho", "onGetWalkingRouteResult is ok");
-			RouteOverlay routeOverlay = new RouteOverlay(mparent, mMapView);
+			RouteOverlay routeOverlay = new RouteOverlay(mparent,
+					mparent.map_view);
 			routeOverlay.setData(result.getPlan(0).getRoute(0));
 
 			MKRoute aRoute = result.getPlan(0).getRoute(0);
@@ -326,16 +336,15 @@ public class MapMask {
 				Log.i("axlecho", points.get(i).toString());
 			}
 
-			mMapView.getOverlays().add(routeOverlay);
-			mMapView.refresh();
-			
+			mparent.map_view.getOverlays().add(routeOverlay);
+			mparent.map_view.refresh();
+
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
-			mMapView.getController().zoomToSpan(routeOverlay.getLatSpanE6(),
-					routeOverlay.getLonSpanE6());
-			mMapView.getController().animateTo(result.getStart().pt);
+			mparent.map_view.getController().zoomToSpan(
+					routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());
+			mparent.map_view.getController().animateTo(result.getStart().pt);
 
 		}
 	}
 
-	
 }

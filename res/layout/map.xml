@@ -10,12 +10,6 @@
         android:layout_height="fill_parent"
         android:clickable="true" />
 
-    <Button
-        android:id="@+id/search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="开始" />
-
     <TextView
         android:id="@+id/busline_detail"
         android:layout_width="wrap_content"
