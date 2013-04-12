@@ -16,4 +16,13 @@
         android:layout_height="wrap_content"
         android:text="开始" />
 
+    <TextView
+        android:id="@+id/busline_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/search"
+        android:text="路线详细"
+        android:textSize="18dp" />
+
 </RelativeLayout>
