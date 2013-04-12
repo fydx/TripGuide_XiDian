@@ -2,6 +2,8 @@ package com.baidu.map_tool;
 
 import java.util.ArrayList;
 
+import org.xdgdg.tripguide_xidian.MyApp;
+
 import android.app.Activity;
 import android.util.Log;
 
@@ -28,12 +30,20 @@ import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 
 public class MapMask {
-
+	
+	
 	private final int POINTSIZE = 10;
 	private MapView mMapView = null;
 	private Activity mparent = null;
+    private String routeString;
+	public String getRouteString() {
+		return routeString;
+	}
 
-	
+	public void setRouteString(String routeString) {
+		this.routeString = routeString;
+	}
+
 	private GraphicsOverlay graphicsOverlay = null;
 
 	private void check_masklayout() {
@@ -117,29 +127,28 @@ public class MapMask {
 		mSearch.walkingSearch(null, node_start, null, node_end);
 		Log.i("axlecho", "p2p_bywalk ok");
 	}
-
+    //返回值由void 改为String (返回路线)
 	public void p2p_bybus(double start_x, double start_y, double end_x,
 			double end_y) {
 		GeoPoint start = new GeoPoint((int) (start_x * 1e6),
 				(int) (start_y * 1e6));
 		GeoPoint end = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
 		MKSearch mSearch = new MKSearch();
+		resultListener reListener_edit = new resultListener();
 		mSearch.init(MapBase.Instance(null).getMapManager(),
-				new resultListener());
+				reListener_edit);
 
-
-		
 		MKPlanNode node_start = new MKPlanNode();
-//		node_start.pt = start;
+		// node_start.pt = start;
 		node_start.name = "西安电子科技大学(南校区)";
-		
 
 		MKPlanNode node_end = new MKPlanNode();
 		node_end.pt = end;
-//		node_end.name = "小寨";
-
+		// node_end.name = "小寨";
+		
 		mSearch.transitSearch("西安", node_start, node_end);
 		Log.i("axlecho", "p2p_bybus ok");
+		
 	}
 
 	public void p2p_bycar(double start_x, double start_y, double end_x,
@@ -148,6 +157,12 @@ public class MapMask {
 				(int) (start_y * 1e6));
 		GeoPoint end = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
 		MKSearch mSearch = new MKSearch();
+		//改写一下
+		//原本的版本在注释里
+		/* mSearch.init(MapBase.Instance(null).getMapManager(),
+				new resultListener());
+			*/
+		;
 		mSearch.init(MapBase.Instance(null).getMapManager(),
 				new resultListener());
 
@@ -213,10 +228,11 @@ public class MapMask {
 	}
 
 	class resultListener implements MKSearchListener {
-
+	
+	
 		@Override
 		public void onGetPoiDetailSearchResult(int type, int error) {
-			Log.i("axlecho","onGetPoiDetailSearchResult is ok");
+			Log.i("axlecho", "onGetPoiDetailSearchResult is ok");
 		}
 
 		@Override
@@ -226,7 +242,7 @@ public class MapMask {
 				Log.i("axlecho", "result is null.");
 				return;
 			}
-			Log.i("axlecho","onGetAddrResult is ok");
+			Log.i("axlecho", "onGetAddrResult is ok");
 		}
 
 		@Override
@@ -236,7 +252,7 @@ public class MapMask {
 				Log.i("axlecho", "result is null.");
 				return;
 			}
-			Log.i("axlecho","onGetBusDetailResult is ok");
+			Log.i("axlecho", "onGetBusDetailResult is ok");
 		}
 
 		@Override
@@ -286,17 +302,35 @@ public class MapMask {
 			TransitOverlay routeOverlay = new TransitOverlay(mparent, mMapView);
 			// 此处仅展示一个方案作为示例
 			routeOverlay.setData(result.getPlan(0));
-//			mMapView.getOverlays().clear();
+			// mMapView.getOverlays().clear();
 			mMapView.getOverlays().add(routeOverlay);
 			mMapView.refresh();
-			Log.i("axlecho","i get here.");
+			Log.i("axlecho", "i get here.");
+			int num_line = result.getPlan(0).getNumLines() - 1;
+			Log.i("fydx",
+					"需要倒" + String.valueOf(result.getPlan(0).getNumLines() - 1)
+							+ "次车");
+			Log.i("axlecho", String.valueOf(result.getPlan(0).getDistance()));
+			Log.i("axlecho", "content" + result.getPlan(0).getContent());
+			Log.i("axlecho", "Uid" + result.getPlan(0).getLine(0).getUid());
+			Log.i("axlecho", "OnStop"
+					+ result.getPlan(0).getLine(0).getGetOnStop().name);
+			Log.i("axlecho", "OffStop"
+					+ result.getPlan(0).getLine(0).getGetOffStop().name);
+			Log.i("axlecho", "Tip" + result.getPlan(0).getLine(0).getTip());
+			Log.i("two", "Tip2" + result.getPlan(0).getLine(num_line).getTip());
+			if (num_line == 0) {
+				routeString = "从 "
+						+ result.getPlan(0).getLine(0).getGetOnStop().name
+						+ " " + result.getPlan(0).getLine(0).getTip();
+			} else {
+				routeString = "从"
+						+ result.getPlan(0).getLine(0).getGetOnStop().name
+						 + result.getPlan(0).getLine(0).getTip() + ",再"
+						+ result.getPlan(0).getLine(1).getTip();
+			}
 			
-			Log.i("axlecho",String.valueOf(result.getPlan(0).getDistance()));
-			Log.i("axlecho","content" + result.getPlan(0).getContent());
-			Log.i("axlecho","Uid" + result.getPlan(0).getLine(0).getUid());
-			Log.i("axlecho","OnStop" + result.getPlan(0).getLine(0).getGetOnStop().name);
-			Log.i("axlecho","OffStop" + result.getPlan(0).getLine(0).getGetOffStop().name);	
-			Log.i("axlecho","Tip" + result.getPlan(0).getLine(0).getTip());
+			Log.e("路线", routeString);
 			
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
 			mMapView.getController().zoomToSpan(routeOverlay.getLatSpanE6(),
@@ -328,7 +362,7 @@ public class MapMask {
 
 			mMapView.getOverlays().add(routeOverlay);
 			mMapView.refresh();
-			
+
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
 			mMapView.getController().zoomToSpan(routeOverlay.getLatSpanE6(),
 					routeOverlay.getLonSpanE6());
@@ -337,5 +371,4 @@ public class MapMask {
 		}
 	}
 
-	
 }

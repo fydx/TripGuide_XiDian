@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.MKOLUpdateElement;
 import com.baidu.mapapi.map.MKOfflineMap;
@@ -20,7 +21,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 
 public class mapActivity extends Activity {
-
+	private String lineString;//路线
 	// 原缩放级别
 	private final int zoom_level = 17;
 
@@ -50,7 +51,7 @@ public class mapActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.map);
-
+		
 		Intent intent = getIntent();
 		tar_pt_x = intent.getDoubleExtra("pos_x", 34.0000);
 		tar_pt_y = intent.getDoubleExtra("pos_y", 108.0000);
@@ -66,23 +67,29 @@ public class mapActivity extends Activity {
 		// 设置起始
 		setbegin();
 
-		final MapMask amask = new MapMask(this, map_view);
+	
 //		amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
 		// amask.p2p_bycar(34.2230,108.9467,34.2441,108.9635);
 		// amask.p2p_line(34.2230, 108.9467, 34.2441, 108.9635);
 		// amask.cover_point(34.132008,108.844008);
 
-
+		final 	MapMask amask = new MapMask(this, map_view);
 		btn_test = (Button) findViewById(R.id.search);
 		btn_test.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 //				 amask.p2p_bywalk(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+			
 				 amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+				// Log.e("getRoute",amask.getRouteString());
+				 lineString=amask.getRouteString();
+				 TextView buslineTextView = (TextView)findViewById(R.id.busline_detail);
+					buslineTextView.setText(lineString);
 			}
 
 		});
+		
 	}
 
 	@Override
