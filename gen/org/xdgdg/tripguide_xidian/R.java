@@ -51,23 +51,25 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int dongdajie=0x7f020005;
         public static final int ic_launcher=0x7f020006;
         public static final int listitem_bg=0x7f020007;
-        public static final int tab_bg_selected=0x7f020008;
-        public static final int tab_bg_selector=0x7f020009;
-        public static final int tab_bg_unselected=0x7f02000a;
-        public static final int tab_divider=0x7f02000b;
-        public static final int tab_text_selector=0x7f02000c;
-        public static final int welcome=0x7f02000d;
-        public static final int xiaozhai=0x7f02000e;
+        public static final int listitem_my_bg=0x7f020008;
+        public static final int tab_bg_selected=0x7f020009;
+        public static final int tab_bg_selector=0x7f02000a;
+        public static final int tab_bg_unselected=0x7f02000b;
+        public static final int tab_divider=0x7f02000c;
+        public static final int tab_text_selector=0x7f02000d;
+        public static final int welcome=0x7f02000e;
+        public static final int xiaozhai=0x7f02000f;
     }
     public static final class id {
-        public static final int action_settings=0x7f090011;
-        public static final int bmapsView=0x7f09000f;
+        public static final int action_settings=0x7f090014;
+        public static final int bmapsView=0x7f090012;
         public static final int button_set=0x7f090001;
         public static final int detail_area=0x7f090006;
         public static final int detail_distance=0x7f090007;
         public static final int detail_name=0x7f090005;
         public static final int detail_time=0x7f090008;
         public static final int distance=0x7f09000e;
+        public static final int imageView1=0x7f09000f;
         public static final int listView_main=0x7f090000;
         public static final int listitem_bg=0x7f09000b;
         public static final int pic_bottom_name=0x7f090004;
@@ -77,7 +79,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int picture_pos=0x7f09000c;
         public static final int pos_detail=0x7f09000a;
         public static final int position_name=0x7f09000d;
-        public static final int tabsText=0x7f090010;
+        public static final int route_time=0x7f090010;
+        public static final int tabsText=0x7f090013;
+        public static final int textView1=0x7f090011;
     }
     public static final class layout {
         public static final int activity_destination=0x7f030000;
@@ -86,8 +90,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_my_route=0x7f030003;
         public static final int activity_welcome=0x7f030004;
         public static final int listitem_main=0x7f030005;
-        public static final int map=0x7f030006;
-        public static final int tabs_bg=0x7f030007;
+        public static final int listitem_my=0x7f030006;
+        public static final int map=0x7f030007;
+        public static final int tabs_bg=0x7f030008;
     }
     public static final class menu {
         public static final int destination=0x7f080000;

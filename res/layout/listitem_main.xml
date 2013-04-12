@@ -14,7 +14,7 @@
     <ImageView
         android:id="@+id/picture_pos"
         android:layout_width="270dp"
-        android:layout_height="139dp"
+        android:layout_height="135dp"
         android:paddingTop="10dp"
         android:paddingRight="2dp"
         android:layout_alignParentTop="true"
@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/picture_pos"
         android:layout_below="@+id/picture_pos"
+  
         android:paddingLeft="5dp"
         android:text="距离"
         android:textColor="#989898"
