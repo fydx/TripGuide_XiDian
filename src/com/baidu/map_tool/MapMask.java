@@ -33,6 +33,7 @@ public class MapMask {
 	private MapView mMapView = null;
 	private Activity mparent = null;
 
+	
 	private GraphicsOverlay graphicsOverlay = null;
 
 	private void check_masklayout() {
@@ -336,4 +337,5 @@ public class MapMask {
 		}
 	}
 
+	
 }

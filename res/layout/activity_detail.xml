@@ -42,7 +42,7 @@
         android:layout_alignRight="@+id/button_set"
         android:layout_alignTop="@+id/pic_detail_bottom"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="7dp"
         android:layout_toRightOf="@+id/pic_detail_bottom"
         android:src="@drawable/detailpicforname" />
 
@@ -89,9 +89,9 @@
 
     <ImageView
         android:id="@+id/pic_detailcontent"
-        android:layout_width="265dp"
-        android:layout_height="200dp"
-        android:paddingTop="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="1dp"
         android:layout_alignLeft="@+id/pic_detail_bottom"
         android:layout_alignRight="@+id/pic_bottom_name"
         android:layout_below="@+id/pic_bottom_name"
@@ -104,7 +104,7 @@
         android:layout_alignLeft="@+id/pic_detailcontent"
         android:layout_below="@+id/pic_detail_bottom"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="18dp"
         android:text="详情" />
 
 </RelativeLayout>
