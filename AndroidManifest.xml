@@ -30,11 +30,12 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name="org.xdgdg.tripguide_xidian.MyApp" >
         <activity
             android:name="org.xdgdg.tripguide_xidian.Welcome"
             android:label="@string/title_activity_welcome"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,27 +45,27 @@
         <activity
             android:name="org.xdgdg.tripguide_xidian.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="org.xdgdg.tripguide_xidian.DestinationActivity"
             android:label="@string/title_activity_destination"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="org.xdgdg.tripguide_xidian.MyRouteActivity"
             android:label="@string/title_activity_my_route"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.baidu.map_tool.mapActivity"
             android:label="map"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="org.xdgdg.tripguide_xidian.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.baidu.map_tool.SearchActivity"

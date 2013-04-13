@@ -23,7 +23,10 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 
 public class mapActivity extends Activity {
+	
 	protected static final int INQUIREFIRSTLINE = 0x101;
+	private final int sleep_time = 2000;
+	
 	// 原缩放级别
 	private final int zoom_level = 17;
 
@@ -65,7 +68,7 @@ public class mapActivity extends Activity {
 		Intent intent = getIntent();
 		tar_pt_x = intent.getDoubleExtra("pos_x", 34.0000);
 		tar_pt_y = intent.getDoubleExtra("pos_y", 108.0000);
-
+		
 		Log.i("axlecho", "get intent ok.");
 
 		tex_tip = (TextView) findViewById(R.id.busline_detail);
@@ -95,10 +98,20 @@ public class mapActivity extends Activity {
 
 		// amask.set_scrpos(src_pt_x, src_pt_y);
 
-		amask.cover_pic(34.12309, 108.84179, R.drawable.sketchy_weather_12);
-		amask.cover_pic(tar_pt_x, tar_pt_y, R.drawable.sketchy_weather_12);
+		amask.cover_pic(34.12309, 108.84179, R.drawable.icon_marka);
+		amask.cover_pic(tar_pt_x, tar_pt_y, R.drawable.icon_markb);
 		Log.i("axlecho", "oncerate ok.");
+		
+	
+		btn_test = (Button)findViewById(R.id.btn_test);
+		btn_test.setOnClickListener(new OnClickListener(){
 
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+			}
+			
+		});
 	}
 
 	@Override
@@ -176,7 +189,7 @@ public class mapActivity extends Activity {
 
 		public void run() {
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(sleep_time);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -194,7 +207,7 @@ public class mapActivity extends Activity {
 			switch (msg.what) {
 			case mapActivity.INQUIREFIRSTLINE:
 //				amask.p2p_bybus("西安电子科技大学(南校区)", "小寨");
-				 amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+				amask.p2p_bywalk(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
 				break;
 			}
 			super.handleMessage(msg);
