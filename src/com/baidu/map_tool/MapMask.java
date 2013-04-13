@@ -1,18 +1,29 @@
+//next step 
+//1.解决resume bug ok
+//2.永久存储 
+//3.覆盖物 ok
+
+
 package com.baidu.map_tool;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.xdgdg.tripguide_xidian.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.baidu.mapapi.map.Geometry;
 import com.baidu.mapapi.map.Graphic;
 import com.baidu.mapapi.map.GraphicsOverlay;
+import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MyLocationOverlay;
+import com.baidu.mapapi.map.OverlayItem;
 import com.baidu.mapapi.map.RouteOverlay;
 import com.baidu.mapapi.map.Symbol;
 import com.baidu.mapapi.map.TransitOverlay;
@@ -48,11 +59,13 @@ public class MapMask {
 		mparent = (mapActivity) _parent;
 	}
 
-	private void SetScrpos(double pos_x, double pos_y) {
-		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
-				mparent.map_view);
+	private void set_scrpos(double pos_x, double pos_y) {
+		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(mparent.map_view);
+		
+		
+		GeoPoint src_pt =new GeoPoint((int) (pos_x * 1e6),(int) (pos_y * 1e6));
+		
 		LocationData locData = new LocationData();
-
 		locData.latitude = pos_x;
 		locData.longitude = pos_y;
 		locData.direction = 200.0f;
@@ -60,56 +73,14 @@ public class MapMask {
 
 		mparent.map_view.getOverlays().add(myLocationOverlay);
 		mparent.map_view.refresh();
-		mparent.map_view.getController().animateTo(
-				new GeoPoint((int) (locData.latitude * 1e6),
-						(int) (locData.longitude * 1e6)));
+		mparent.map_view.getController().animateTo(src_pt);
 	}
 
-	private void setupinfo(double start_x, double start_y, double end_x,
-			double end_y) {
-
-	}
-
-	public void p2p_line(double start_x, double start_y, double end_x,
-			double end_y) {
-
-		GeoPoint start = new GeoPoint((int) (start_x * 1e6),
-				(int) (start_y * 1e6));
-		GeoPoint end = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
-
-		check_masklayout();
-
-		Geometry lineGeometry = new Geometry();
-		GeoPoint[] linePoints = new GeoPoint[2];
-		linePoints[0] = start;
-		linePoints[1] = end;
-		// linePoints[2] = pt3;
-		lineGeometry.setPolyLine(linePoints);
-
-		Symbol lineSymbol = new Symbol();
-		Symbol.Color lineColor = lineSymbol.new Color();
-
-		lineColor.red = 0;
-		lineColor.green = 0;
-		lineColor.blue = 0;
-		lineColor.alpha = 255;
-
-		lineSymbol.setLineSymbol(lineColor, 10);
-
-		Graphic lineGraphic = new Graphic(lineGeometry, lineSymbol);
-
-		graphicsOverlay.setData(lineGraphic);
-		mparent.map_view.refresh();
-	}
-
+	
 	public void p2p_bywalk(double start_x, double start_y, double end_x,
 			double end_y) {
-
-		setupinfo(start_x, start_y, end_x, end_y);
-
-		GeoPoint start = new GeoPoint((int) (start_x * 1e6),
-				(int) (start_y * 1e6));
-		GeoPoint end = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
+		GeoPoint start = new GeoPoint((int) (start_x * 1e6),(int) (start_y * 1e6));
+		GeoPoint end   = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
 		MKSearch mSearch = new MKSearch();
 		mSearch.init(MapBase.Instance(null).getMapManager(),
 				new resultListener());
@@ -136,15 +107,31 @@ public class MapMask {
 				new resultListener());
 
 		MKPlanNode node_start = new MKPlanNode();
-		node_start.name = "西安电子科技大学(南校区)";
+		node_start.pt = start;
 
 		MKPlanNode node_end = new MKPlanNode();
 		node_end.pt = end;
 
 		mSearch.transitSearch("西安", node_start, node_end);
-		Log.i("axlecho", "p2p_bybus ok");
+		Log.i("axlecho", "p2p_bybus by point ok");
 	}
 
+	public void p2p_bybus(String start,String end){
+		MKSearch mSearch = new MKSearch();
+		mSearch.init(MapBase.Instance(null).getMapManager(),
+				new resultListener());
+
+		MKPlanNode node_start = new MKPlanNode();
+		node_start.name = start;
+//		"西安电子科技大学(南校区)";
+
+		MKPlanNode node_end = new MKPlanNode();
+		node_end.name = end;
+
+		mSearch.transitSearch("西安", node_start, node_end);
+		Log.i("axlecho", "p2p_bybus by name ok");
+	}
+	
 	public void p2p_bycar(double start_x, double start_y, double end_x,
 			double end_y) {
 		GeoPoint start = new GeoPoint((int) (start_x * 1e6),
@@ -166,6 +153,7 @@ public class MapMask {
 		Log.i("axlecho", "p2p_bycar ok");
 	}
 
+	
 	public void cover_circle(double center_x, double center_y, int radius) {
 		GeoPoint center = new GeoPoint((int) (center_x * 1e6),
 				(int) (center_y * 1e6));
@@ -215,12 +203,54 @@ public class MapMask {
 		mparent.map_view.refresh();
 	}
 
-	public void cover_pic(double point_x,double point_y){
-//		Drawable marker = mparent.getResources().getDrawable(R.drawable.sketchy_weather_12); //得到需要标在地图上的资源
-//		mparent.map_view.getOverlays().add(new OverItemT(marker, this)); //添加ItemizedOverlay实例到mMapView
-//		mMapView.refresh()//刷新地图
+	public void cover_line(double start_x, double start_y, double end_x,
+			double end_y) {
+
+		GeoPoint start = new GeoPoint((int) (start_x * 1e6),
+				(int) (start_y * 1e6));
+		GeoPoint end = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
+
+		check_masklayout();
+
+		Geometry lineGeometry = new Geometry();
+		GeoPoint[] linePoints = new GeoPoint[2];
+		linePoints[0] = start;
+		linePoints[1] = end;
+		// linePoints[2] = pt3;
+		lineGeometry.setPolyLine(linePoints);
+
+		Symbol lineSymbol = new Symbol();
+		Symbol.Color lineColor = lineSymbol.new Color();
+
+		lineColor.red = 0;
+		lineColor.green = 0;
+		lineColor.blue = 0;
+		lineColor.alpha = 255;
+
+		lineSymbol.setLineSymbol(lineColor, 10);
+
+		Graphic lineGraphic = new Graphic(lineGeometry, lineSymbol);
+
+		graphicsOverlay.setData(lineGraphic);
+		mparent.map_view.refresh();
 	}
-	class resultListener implements MKSearchListener {
+	
+	public void cover_pic(double point_x,double point_y,int pic_id){
+		Drawable marker = mparent.getResources().getDrawable(pic_id); //得到需要标在地图上的资源
+		OverlayItem item= new OverlayItem(new GeoPoint((int)(point_x * 1e6),(int)(point_y * 1e6)),"text","test");
+		item.setMarker(marker);
+		
+		OverItemT items = new OverItemT(marker, mparent);
+		items.additem(item);
+		
+		mparent.map_view.getOverlays().add(items); //添加ItemizedOverlay实例到mMapView
+		mparent.map_view.refresh();//刷新地图
+		Log.i("axlecho","cover_pic ok.");
+	}
+	
+	
+	
+	private class resultListener implements MKSearchListener {
 
 		@Override
 		public void onGetPoiDetailSearchResult(int type, int error) {
@@ -347,4 +377,45 @@ public class MapMask {
 		}
 	}
 
+	private class OverItemT extends ItemizedOverlay<OverlayItem> {
+		
+		private List<OverlayItem> GeoList = new ArrayList<OverlayItem>();
+		private Context mContext;
+
+		public void additem(OverlayItem item) {
+			GeoList.add(item);
+			populate();
+		}
+
+		public void removeItem(int index) {
+			GeoList.remove(index);
+			populate();
+		}
+        
+		OverItemT(Drawable marker, Context context) {
+			super(marker);
+
+			this.mContext = context;
+		}
+
+		@Override
+		protected OverlayItem createItem(int i) {
+			return GeoList.get(i);
+		}
+
+		@Override
+		public int size() {
+			return GeoList.size();
+		}
+
+		@Override
+		// 处理当点击事件
+		protected boolean onTap(int i) {
+			Toast.makeText(this.mContext, GeoList.get(i).getSnippet(),
+					Toast.LENGTH_SHORT).show();
+			return true;
+		}
+	};
+		
+		
 }
