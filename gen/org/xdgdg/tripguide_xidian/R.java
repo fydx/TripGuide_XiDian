@@ -72,14 +72,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int minleyuan=0x7f02001a;
         public static final int nandajie=0x7f02001b;
         public static final int setbar_bg=0x7f02001c;
-        public static final int tab_bg_selected=0x7f02001d;
-        public static final int tab_bg_selector=0x7f02001e;
-        public static final int tab_bg_unselected=0x7f02001f;
-        public static final int tab_divider=0x7f020020;
-        public static final int tab_text_selector=0x7f020021;
-        public static final int welcome=0x7f020022;
-        public static final int xiaozhai=0x7f020023;
-        public static final int xidajie=0x7f020024;
+        public static final int sketchy_weather_12=0x7f02001d;
+        public static final int tab_bg_selected=0x7f02001e;
+        public static final int tab_bg_selector=0x7f02001f;
+        public static final int tab_bg_unselected=0x7f020020;
+        public static final int tab_divider=0x7f020021;
+        public static final int tab_text_selector=0x7f020022;
+        public static final int welcome=0x7f020023;
+        public static final int xiaozhai=0x7f020024;
+        public static final int xidajie=0x7f020025;
     }
     public static final class id {
         public static final int action_settings=0x7f090017;
