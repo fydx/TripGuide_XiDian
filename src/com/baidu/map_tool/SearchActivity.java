@@ -94,16 +94,21 @@ public class SearchActivity extends Activity {
 			Log.i("info", poi.name);
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("name", poi.name);
-			map.put("distance", poi.address);
-			map.put("pic", poi.phoneNum);
+			map.put("address", poi.address);
+			map.put("tel", poi.phoneNum);
+			Log.i("poi.name", poi.name);
+			Log.i("poi.address", poi.address);
+			Log.i("poi.tel", poi.phoneNum);
 			mData.add(map);
 		}
 		mSchedule = new SimpleAdapter(this, // 没什么解释
 				mData,// 数据来源
 				R.layout.listitem_search,// ListItem的XML实现
-				new String[] { "name", "address", "tel" },// 动态数组与ListItem对应的子项
-				new int[] { R.id.search_name, R.id.search_address,	R.id.search_tel });// ListItem的XML文件里面的两个TextView ID
-		
+				// 动态数组与ListItem对应的子项
+				new String[] { "name", "address", "tel" },
+				// ListItem的XML文件里面的三个TextView ID
+				new int[] { R.id.search_name, R.id.search_address,
+						R.id.search_tel });
 		// 添加并且显示
 		listView.setDividerHeight(0);
 		listView.setAdapter(mSchedule);
