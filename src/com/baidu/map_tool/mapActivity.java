@@ -31,9 +31,10 @@ public class mapActivity extends Activity {
 	private final int zoom_level = 17;
 
 	// 西電34.12309, 108.84179
+	//	34.1233959,108.83594160000007
 	// 源地址为西电
-	private double src_pt_x = 34.12309;
-	private double src_pt_y = 108.84179;
+	private double src_pt_x = 34.1233959;
+	private double src_pt_y = 108.83594160000007;
 
 	// 目标地址由外部activity传进来
 	private double tar_pt_x = 0;
@@ -69,6 +70,10 @@ public class mapActivity extends Activity {
 		tar_pt_x = intent.getDoubleExtra("pos_x", 34.0000);
 		tar_pt_y = intent.getDoubleExtra("pos_y", 108.0000);
 		
+//		test 小寨
+		tar_pt_x = 34.222936;
+		tar_pt_y = 108.946687;
+		
 		Log.i("axlecho", "get intent ok.");
 
 		tex_tip = (TextView) findViewById(R.id.busline_detail);
@@ -98,7 +103,7 @@ public class mapActivity extends Activity {
 
 		// amask.set_scrpos(src_pt_x, src_pt_y);
 
-		amask.cover_pic(34.12309, 108.84179, R.drawable.icon_marka);
+		amask.cover_pic(src_pt_x, src_pt_y, R.drawable.icon_marka);
 		amask.cover_pic(tar_pt_x, tar_pt_y, R.drawable.icon_markb);
 		Log.i("axlecho", "oncerate ok.");
 		
@@ -108,7 +113,12 @@ public class mapActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				amask.p2p_bywalk(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+				src_pt_x = tar_pt_x;
+				src_pt_y = tar_pt_y;
+				
+				tar_pt_x += 0.02;
+				tar_pt_y += 0.02;
 			}
 			
 		});
@@ -207,7 +217,7 @@ public class mapActivity extends Activity {
 			switch (msg.what) {
 			case mapActivity.INQUIREFIRSTLINE:
 //				amask.p2p_bybus("西安电子科技大学(南校区)", "小寨");
-				amask.p2p_bywalk(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+				amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
 				break;
 			}
 			super.handleMessage(msg);

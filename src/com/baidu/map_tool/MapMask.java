@@ -55,12 +55,25 @@ public class MapMask {
 	//气泡图层
 	private OverItemT items  = null;
 	
+	//公交图层
+	private TransitOverlay transit_routeOverlay = null;
+	
+	//走路图层
+	private RouteOverlay walk_routeOverlay = null;
+ 
 	public MapMask(Activity _parent) {
 		mparent = (mapActivity) _parent;
 		items = new OverItemT(mparent.getResources().getDrawable(R.drawable.ic_launcher),mparent); //得到需要标在地图上的资源)
 		
 		graphicsOverlay = new GraphicsOverlay(mparent.map_view);
 		mparent.map_view.getOverlays().add(graphicsOverlay);
+		
+		transit_routeOverlay = new TransitOverlay(mparent,mparent.map_view);
+		mparent.map_view.getOverlays().add(transit_routeOverlay);
+		
+		walk_routeOverlay = new RouteOverlay(mparent,mparent.map_view);
+		mparent.map_view.getOverlays().add(walk_routeOverlay);
+		
 	}
 
 	private void set_scrpos(double pos_x, double pos_y) {
@@ -357,13 +370,11 @@ public class MapMask {
 				return;
 			}
 			Log.i("axlecho", "onGetTransitRouteResult ok.");
-			TransitOverlay routeOverlay = new TransitOverlay(mparent,
-					mparent.map_view);
+			
 			// 此处仅展示一个方案作为示例
-			routeOverlay.setData(result.getPlan(0));
-			// mparent.map_view.getOverlays().clear();
-			mparent.map_view.getOverlays().add(routeOverlay);
+			transit_routeOverlay.setData(result.getPlan(0));
 			mparent.map_view.refresh();
+			
 			Log.i("axlecho", "i get here.");
 			
 			//0413-10:55修改 这样子可以获取到两条路线
@@ -389,8 +400,7 @@ public class MapMask {
 				mparent.tex_tip.setText(tmp);
 			
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
-			mparent.map_view.getController().zoomToSpan(
-					routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());
+			mparent.map_view.getController().zoomToSpan(transit_routeOverlay.getLatSpanE6(), transit_routeOverlay.getLonSpanE6());
 			mparent.map_view.getController().animateTo(result.getStart().pt);
 
 		}
@@ -405,18 +415,12 @@ public class MapMask {
 			}
 
 			Log.i("axlecho", "onGetWalkingRouteResult is ok");
-			RouteOverlay routeOverlay = new RouteOverlay(mparent,
-					mparent.map_view);
-			routeOverlay.setData(result.getPlan(0).getRoute(0));
-
-			MKRoute aRoute = result.getPlan(0).getRoute(0);					
-			cover_lines(aRoute.getArrayPoints());
 			
-			//mparent.map_view.getOverlays().add(routeOverlay);
-			//mparent.map_view.refresh();
+			walk_routeOverlay.setData(result.getPlan(0).getRoute(0));
+			mparent.map_view.refresh();
 			
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
-			mparent.map_view.getController().zoomToSpan(routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());
+			mparent.map_view.getController().zoomToSpan(walk_routeOverlay.getLatSpanE6(), walk_routeOverlay.getLonSpanE6());
 			mparent.map_view.getController().animateTo(result.getStart().pt);
 
 		}
@@ -441,17 +445,18 @@ public class MapMask {
                 	if(current == -1){
                 		Log.e("axlecho","onClickedPopup something wrong.");
                 	}
-                	GeoPoint pt  = GeoList.get(index-1).getPoint();
-                	int pos_x = pt.getLatitudeE6();
-                	int pos_y = pt.getLongitudeE6();
-                	Intent intent = new Intent();
-                	intent.setClass(mparent.getApplicationContext(), SearchActivity.class);
-                  
-                	intent.putExtra("search_x", pos_x);
-                	intent.putExtra("search_y", pos_y);
-                	mparent.startActivity(intent);
-                	
-                	Log.i("axlecho",String.valueOf(index) + "was clicked");
+
+					GeoPoint pt = GeoList.get(current).getPoint();
+					int pos_x = pt.getLatitudeE6();
+					int pos_y = pt.getLongitudeE6();
+					Intent intent = new Intent();
+					intent.setClass(mparent.getApplicationContext(),SearchActivity.class);
+
+					intent.putExtra("search_x", pos_x);
+					intent.putExtra("search_y", pos_y);
+					mparent.startActivity(intent);
+
+					Log.i("axlecho", String.valueOf(index) + "was clicked");
                 }
             });
             populate();
@@ -478,41 +483,21 @@ public class MapMask {
 			return GeoList.size();
 		}
 
-		//点击气泡事件
+		// 点击气泡事件
 		protected boolean onTap(int index) {
-		
-			Log.i("axlecho","index:" + String.valueOf(index));
+
+			Log.i("axlecho", "buble was clicked index :" + String.valueOf(index));
 			current = index;
-            Bitmap[] bmps = new Bitmap[3];
-            if (index % 3 == 0) {
-                try {
-                    bmps[0] = BitmapFactory.decodeStream(mContext.getAssets().open("marker1.png"));
-                    bmps[1] = BitmapFactory.decodeStream(mContext.getAssets().open("marker2.png"));
-                    bmps[2] = BitmapFactory.decodeStream(mContext.getAssets().open("marker3.png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                pop.showPopup(bmps, GeoList.get(index).getPoint(), 32);
-            }
-            else if (index % 3 == 1){
-                try {
-                    bmps[2] = BitmapFactory.decodeStream(mContext.getAssets().open("marker1.png"));
-                    bmps[1] = BitmapFactory.decodeStream(mContext.getAssets().open("marker2.png"));
-                    bmps[0] = BitmapFactory.decodeStream(mContext.getAssets().open("marker3.png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                pop.showPopup(bmps, GeoList.get(index).getPoint(), 32);
-            }
-            else {
-                if (mBtn == null)
-                    mBtn = new Button(mContext);
-                mBtn.setText("TestTest");
-				mparent.map_view.addView(mBtn, new MapView.LayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,
-						GeoList.get(index).getPoint(),
-						MapView.LayoutParams.BOTTOM_CENTER));
-            }
+			Bitmap[] bmps = new Bitmap[3];
+			try {
+				bmps[0] = BitmapFactory.decodeStream(mContext.getAssets().open("marker1.png"));
+				bmps[1] = BitmapFactory.decodeStream(mContext.getAssets().open("marker2.png"));
+				bmps[2] = BitmapFactory.decodeStream(mContext.getAssets().open("marker3.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			pop.showPopup(bmps, GeoList.get(index).getPoint(), 32);
+
 			return true;
 		}
 
