@@ -50,12 +50,15 @@ public class DetailActivity extends Activity {
 				Intent intent= new Intent();
 				intent.setClass(DetailActivity.this,mapActivity.class);
 				intent.putExtra("pos_x", pos.getLatitude());
+				Log.i("detail_pass_x", String.valueOf(pos.getLatitude()));
 				intent.putExtra("pos_y", pos.getLongitude());
+				Log.i("detail_pass_y", String.valueOf(pos.getLongitude()));
 				startActivity(intent);
 			
 			} 
 		});
-		  img.setOnClickListener(new OnClickListener() {
+		  //注释部分为调试SearchActivity所用
+		  /*  img.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -67,7 +70,7 @@ public class DetailActivity extends Activity {
 				startActivity(intent2);
 				
 			}
-		});
+		});*/ 
 	}
 
 	@Override

@@ -441,14 +441,13 @@ public class MapMask {
                 	if(current == -1){
                 		Log.e("axlecho","onClickedPopup something wrong.");
                 	}
-                	GeoPoint pt  = GeoList.get(index-1).getPoint();
-                	int pos_x = pt.getLatitudeE6();
-                	int pos_y = pt.getLongitudeE6();
+                	GeoPoint pt  = GeoList.get(index).getPoint();
+                	int pos_x1 = pt.getLatitudeE6();
+                	int pos_y1 = pt.getLongitudeE6();
                 	Intent intent = new Intent();
                 	intent.setClass(mparent.getApplicationContext(), SearchActivity.class);
-                  
-                	intent.putExtra("search_x", pos_x);
-                	intent.putExtra("search_y", pos_y);
+                	intent.putExtra("search_x", pos_x1);
+                	intent.putExtra("search_y", pos_y1);
                 	mparent.startActivity(intent);
                 	
                 	Log.i("axlecho",String.valueOf(index) + "was clicked");

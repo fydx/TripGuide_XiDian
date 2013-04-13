@@ -152,6 +152,7 @@ public class mapActivity extends Activity {
 	public void setbegin() {
 		GeoPoint pt_begin = new GeoPoint((int) (tar_pt_x * 1E6),
 				(int) (tar_pt_y * 1E6));
+		Log.i("mapActivity设定地点", String.valueOf(tar_pt_x * 1E6)+"  "+ String.valueOf(tar_pt_y* 1E6));
 		map_controller.setCenter(pt_begin);
 		map_controller.setZoom(zoom_level);
 	}
