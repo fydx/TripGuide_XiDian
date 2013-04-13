@@ -42,24 +42,31 @@ public class mapActivity extends Activity {
 
 	private MapController map_controller = null;
 	private MKOfflineMap mOffline = null;
-	MapMask amask;
+	private MapMask amask;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		MapBase mapbase = MapBase.Instance(this);
+		Log.i("axlecho", "activity create.");
+		MapBase.Instance(this);
+
+		Log.i("axlecho", "init instance ok");
 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+		Log.i("axlecho", "set no title ok.");
+
 		setContentView(R.layout.map);
+
+		Log.i("axlecho", "set contentview ok.");
 
 		Intent intent = getIntent();
 		tar_pt_x = intent.getDoubleExtra("pos_x", 34.0000);
 		tar_pt_y = intent.getDoubleExtra("pos_y", 108.0000);
-		Log.i("axlecho", "pos_x:" + String.valueOf(tar_pt_x) + "pos_y:"
-				+ String.valueOf(tar_pt_y));
+
+		Log.i("axlecho", "get intent ok.");
 
 		tex_tip = (TextView) findViewById(R.id.busline_detail);
 		tex_tip.setText("loading");
@@ -67,42 +74,66 @@ public class mapActivity extends Activity {
 		map_view = (MapView) findViewById(R.id.bmapsView);
 		map_controller = map_view.getController();
 
+		Log.i("axlecho", "get content wight ok.");
+
 		// 加载离线地图
-		scanofflinemap();
+		// scanofflinemap();
+
+		Log.i("axlecho", "scanofflinemap ok.");
 
 		// 设置起始
 		setbegin();
+		Log.i("axlecho", "setbegin ok.");
 
 		// 地图图形处理工具
 		amask = new MapMask(this);
+		Log.i("axlecho", "new mask ok.");
 
 		// 启动初始化查询
 		new Thread(new LooperThread()).start();
+		Log.i("axlecho", "start thread ok.");
+
+		// amask.set_scrpos(src_pt_x, src_pt_y);
+
+		amask.cover_pic(34.12309, 108.84179, R.drawable.sketchy_weather_12);
+		amask.cover_pic(tar_pt_x, tar_pt_y, R.drawable.sketchy_weather_12);
+		Log.i("axlecho", "oncerate ok.");
 
 	}
 
 	@Override
 	protected void onPause() {
 		map_view.onPause();
+		Log.i("axlecho", "pause ok.");
 		super.onPause();
-	}
-
-	@Override
-	protected void onStart() {
-
-		super.onStart();
 	}
 
 	@Override
 	protected void onResume() {
 		map_view.onResume();
+		Log.i("axlecho", "resume ok.");
 		super.onResume();
 	}
 
 	@Override
 	protected void onDestroy() {
+		map_view.destroy();
+		MapBase.Instance(this).terminate();
+		Log.i("axlecho", "destroy ok.");
 		super.onDestroy();
-		MapBase.Instance(null).onTerminate();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		map_view.onSaveInstanceState(outState);
+
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		map_view.onRestoreInstanceState(savedInstanceState);
 	}
 
 	public void setbegin() {
@@ -162,7 +193,8 @@ public class mapActivity extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case mapActivity.INQUIREFIRSTLINE:
-				amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+				amask.p2p_bybus("西安电子科技大学(南校区)", "小寨");
+				// amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
 				break;
 			}
 			super.handleMessage(msg);
