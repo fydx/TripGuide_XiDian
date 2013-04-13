@@ -71,7 +71,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int listitem_my_bg=0x7f020019;
         public static final int minleyuan=0x7f02001a;
         public static final int nandajie=0x7f02001b;
-        public static final int sketchy_weather_12=0x7f02001c;
+        public static final int setbar_bg=0x7f02001c;
         public static final int tab_bg_selected=0x7f02001d;
         public static final int tab_bg_selector=0x7f02001e;
         public static final int tab_bg_unselected=0x7f02001f;

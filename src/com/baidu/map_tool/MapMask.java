@@ -57,7 +57,7 @@ public class MapMask {
 		locData.longitude = pos_y;
 		locData.direction = 200.0f;
 		myLocationOverlay.setData(locData);
-
+        
 		mparent.map_view.getOverlays().add(myLocationOverlay);
 		mparent.map_view.refresh();
 		mparent.map_view.getController().animateTo(
@@ -294,16 +294,32 @@ public class MapMask {
 			Log.i("axlecho", "onGetTransitRouteResult ok.");
 			TransitOverlay routeOverlay = new TransitOverlay(mparent,
 					mparent.map_view);
+			
+			
 			// 此处仅展示一个方案作为示例
 			routeOverlay.setData(result.getPlan(0));
 			// mparent.map_view.getOverlays().clear();
 			mparent.map_view.getOverlays().add(routeOverlay);
 			mparent.map_view.refresh();
 			Log.i("axlecho", "i get here.");
-
-			String tmp = result.getPlan(0).getLine(0).getTip();
+			//0413-10:55修改 这样子可以获取到两条路线
+			int num_line = result.getPlan(0).getNumLines() - 1;
+			Log.i("fydx", "需要倒" + String.valueOf(result.getPlan(0).getNumLines() - 1)
+					            + "次车");
+			String tmp=null;
+			 if (num_line == 0) {
+				 tmp = "从 "
+				            + result.getPlan(0).getLine(0).getGetOnStop().name
+				             + " " + result.getPlan(0).getLine(0).getTip();
+				       } else {
+				  tmp = "从"
+				             + result.getPlan(0).getLine(0).getGetOnStop().name
+				              + result.getPlan(0).getLine(0).getTip() + "\n再"
+				             + result.getPlan(0).getLine(1).getTip();
+				       }
+			//String tmp = result.getPlan(0).getLine(0).getTip();
 			Log.i("axlecho", tmp);
-
+			
 			if (mparent.tex_tip != null)
 				mparent.tex_tip.setText(tmp);
 
@@ -311,7 +327,7 @@ public class MapMask {
 			mparent.map_view.getController().zoomToSpan(
 					routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());
 			mparent.map_view.getController().animateTo(result.getStart().pt);
-
+			
 		}
 
 		@Override
