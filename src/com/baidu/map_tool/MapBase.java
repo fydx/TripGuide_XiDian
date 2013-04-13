@@ -12,11 +12,15 @@ public class MapBase {
 	private BMapManager mBMapManager = null;
 	private static MapBase mInstance = null;
 
-	public void onTerminate() {
+	public void terminate() {
 		if (mBMapManager != null) {
 			mBMapManager.destroy();
 			mBMapManager = null;
+
+			if (mInstance != null)
+				mInstance = null;
 		}
+		
 	}
 
 	public static MapBase Instance(Context context) {
