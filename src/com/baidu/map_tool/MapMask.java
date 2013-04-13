@@ -330,13 +330,28 @@ public class MapMask {
 			mparent.map_view.getOverlays().add(routeOverlay);
 			mparent.map_view.refresh();
 			Log.i("axlecho", "i get here.");
-
-			String tmp = result.getPlan(0).getLine(0).getTip();
+			
+			//0413-10:55修改 这样子可以获取到两条路线
+			int num_line = result.getPlan(0).getNumLines() - 1;
+			Log.i("fydx", "需要倒" + String.valueOf(result.getPlan(0).getNumLines() - 1)
+					            + "次车");
+			String tmp=null;
+			 if (num_line == 0) {
+				 tmp = "从 "
+				            + result.getPlan(0).getLine(0).getGetOnStop().name
+				             + " " + result.getPlan(0).getLine(0).getTip();
+				       } else {
+				  tmp = "从"
+				             + result.getPlan(0).getLine(0).getGetOnStop().name
+				              + result.getPlan(0).getLine(0).getTip() + "\n再"
+				             + result.getPlan(0).getLine(1).getTip();
+				       }
+			//String tmp = result.getPlan(0).getLine(0).getTip();
 			Log.i("axlecho", tmp);
 
 			if (mparent.tex_tip != null)
 				mparent.tex_tip.setText(tmp);
-
+			
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
 			mparent.map_view.getController().zoomToSpan(
 					routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());

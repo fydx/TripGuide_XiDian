@@ -176,7 +176,7 @@ public class mapActivity extends Activity {
 
 		public void run() {
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -193,8 +193,8 @@ public class mapActivity extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case mapActivity.INQUIREFIRSTLINE:
-				amask.p2p_bybus("西安电子科技大学(南校区)", "小寨");
-				// amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+//				amask.p2p_bybus("西安电子科技大学(南校区)", "小寨");
+				 amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
 				break;
 			}
 			super.handleMessage(msg);
