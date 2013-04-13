@@ -83,48 +83,56 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int xidajie=0x7f020025;
     }
     public static final class id {
-        public static final int action_settings=0x7f090017;
-        public static final int bmapsView=0x7f090013;
-        public static final int busline_detail=0x7f090014;
+        public static final int action_settings=0x7f09001c;
+        public static final int bmapsView=0x7f090019;
+        public static final int busline_detail=0x7f09001a;
         public static final int button_set=0x7f090001;
         public static final int detail_area=0x7f090006;
         public static final int detail_distance=0x7f090007;
         public static final int detail_name=0x7f090005;
         public static final int detail_time=0x7f090008;
-        public static final int distance=0x7f09000f;
-        public static final int imageView1=0x7f090010;
+        public static final int distance=0x7f090012;
+        public static final int edittext_search=0x7f09000c;
+        public static final int imageView1=0x7f090013;
         public static final int listView_main=0x7f090000;
         public static final int listView_myroute=0x7f09000b;
-        public static final int listitem_bg=0x7f09000c;
+        public static final int listView_search=0x7f09000e;
+        public static final int listitem_bg=0x7f09000f;
         public static final int pic_bottom_name=0x7f090004;
         public static final int pic_crop=0x7f090003;
         public static final int pic_detail_bottom=0x7f090002;
         public static final int pic_detailcontent=0x7f090009;
-        public static final int picture_pos=0x7f09000d;
+        public static final int picture_pos=0x7f090010;
         public static final int pos_detail=0x7f09000a;
-        public static final int position_name=0x7f09000e;
-        public static final int route_date=0x7f090011;
-        public static final int route_detail=0x7f090012;
-        public static final int search=0x7f090015;
-        public static final int tabsText=0x7f090016;
+        public static final int position_name=0x7f090011;
+        public static final int route_date=0x7f090014;
+        public static final int route_detail=0x7f090015;
+        public static final int search=0x7f09000d;
+        public static final int search_address=0x7f090017;
+        public static final int search_name=0x7f090016;
+        public static final int search_tel=0x7f090018;
+        public static final int tabsText=0x7f09001b;
     }
     public static final class layout {
         public static final int activity_destination=0x7f030000;
         public static final int activity_detail=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_my_route=0x7f030003;
-        public static final int activity_welcome=0x7f030004;
-        public static final int listitem_main=0x7f030005;
-        public static final int listitem_my=0x7f030006;
-        public static final int map=0x7f030007;
-        public static final int tabs_bg=0x7f030008;
+        public static final int activity_search=0x7f030004;
+        public static final int activity_welcome=0x7f030005;
+        public static final int listitem_main=0x7f030006;
+        public static final int listitem_my=0x7f030007;
+        public static final int listitem_search=0x7f030008;
+        public static final int map=0x7f030009;
+        public static final int tabs_bg=0x7f03000a;
     }
     public static final class menu {
         public static final int destination=0x7f080000;
         public static final int detail=0x7f080001;
         public static final int main=0x7f080002;
         public static final int my_route=0x7f080003;
-        public static final int welcome=0x7f080004;
+        public static final int search=0x7f080004;
+        public static final int welcome=0x7f080005;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
@@ -133,6 +141,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_activity_destination=0x7f060004;
         public static final int title_activity_detail=0x7f060006;
         public static final int title_activity_my_route=0x7f060005;
+        public static final int title_activity_search=0x7f060007;
         public static final int title_activity_welcome=0x7f060003;
     }
     public static final class style {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/search_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="14dp"
+        android:text="商家名称" 
+        android:textSize="17dp"/>
+
+    <TextView
+        android:id="@+id/search_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/search_name"
+        android:layout_below="@+id/search_name"
+        android:text="商家地址" />
+
+    <TextView
+        android:id="@+id/search_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/search_address"
+        android:layout_below="@+id/search_address"
+        android:text="商家电话" />
+
+</RelativeLayout>

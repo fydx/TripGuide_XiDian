@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.map_tool.SearchActivity;
 import com.baidu.map_tool.mapActivity;
 
 public class DetailActivity extends Activity {
@@ -53,6 +54,19 @@ public class DetailActivity extends Activity {
 				startActivity(intent);
 			
 			} 
+		});
+		  img.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent2=new Intent();
+				intent2.setClass(DetailActivity.this, SearchActivity.class);
+				intent2.putExtra("search_x", pos.getLatitude());
+				intent2.putExtra("search_y", pos.getLongitude());
+				startActivity(intent2);
+				
+			}
 		});
 	}
 
