@@ -17,7 +17,7 @@
         android:id="@+id/stoptime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="8"
+        android:max="6"
         android:progress="1" />
 
     <TextView

@@ -185,7 +185,7 @@ public class SearchActivity extends Activity
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
-				textView_time.setText(String.valueOf(seekBar.getProgress())+"小时");
+				
 			}
 			
 			@Override
@@ -198,7 +198,7 @@ public class SearchActivity extends Activity
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
 				// TODO Auto-generated method stub
-				
+				textView_time.setText(String.valueOf(seekBar.getProgress())+"小时");
 			}
 		});
 		new AlertDialog.Builder(SearchActivity.this)
