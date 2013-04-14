@@ -8,26 +8,66 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".SearchActivity" >
 
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" >
+
+    <Button
+        android:id="@+id/search_rest"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/edittext_search"
+        android:layout_alignParentTop="true"
+        android:text="餐厅"
+     />
+
+      <Button
+          android:id="@+id/search_cinema"
+          android:layout_width="70dp"
+          android:layout_height="40dp"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentTop="true"
+          android:layout_marginLeft="73dp"
+          android:text="电影院" />
+
+       <Button
+           android:id="@+id/search_ktv"
+           android:layout_width="70dp"
+           android:layout_height="40dp"
+           android:layout_alignParentRight="true"
+           android:layout_alignParentTop="true"
+           android:text="KTV" />
+
+       <Button
+           android:id="@+id/search_coffee"
+           android:layout_width="70dp"
+           android:layout_height="40dp"
+           android:layout_alignParentTop="true"
+           android:layout_marginLeft="1dp"
+           android:layout_toRightOf="@+id/search_cinema"
+           android:text="咖啡厅" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edittext_search"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/edittext_search"
+        android:layout_marginRight="3dp"
+        android:text="搜索" />
+
     <EditText
         android:id="@+id/edittext_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/edittext_search"
-        android:layout_toRightOf="@+id/edittext_search"
-        android:text="搜索" />
-
-    <ListView
+        android:layout_alignTop="@+id/search_rest"
+        android:layout_marginTop="40dp"
+        android:ems="10" />
+      <ListView
         android:id="@+id/listView_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

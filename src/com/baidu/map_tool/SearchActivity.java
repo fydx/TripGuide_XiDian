@@ -52,6 +52,8 @@ public class SearchActivity extends Activity {
 	private TextView textView_time;
 	private MKSearch mMKSearch = null;
 	private BMapManager mBMapMan = null;
+	private Button button, button_cinema, button_ktv, button_rest,
+			button_coffee;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,48 @@ public class SearchActivity extends Activity {
 		Log.e("get pos", pos_x + " " + pos_y);
 		listView = (ListView) findViewById(R.id.listView_search);
 		editText = (EditText) findViewById(R.id.edittext_search);
-		Button button = (Button) findViewById(R.id.search);
+		button = (Button) findViewById(R.id.search);
+		button_rest = (Button) findViewById(R.id.search_rest);
+		button_cinema = (Button) findViewById(R.id.search_cinema);
+		button_ktv = (Button) findViewById(R.id.search_ktv);
+		button_coffee = (Button) findViewById(R.id.search_coffee);
+		button_rest.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mMKSearch.poiSearchNearBy("餐厅", new GeoPoint((int) (pos_x),
+						(int) (pos_y)), 1500);
+			}
+		});
+		button_cinema.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mMKSearch.poiSearchNearBy("电影院", new GeoPoint((int) (pos_x),
+						(int) (pos_y)), 1500);
+			}
+		});
+		button_ktv.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mMKSearch.poiSearchNearBy("KTV", new GeoPoint((int) (pos_x),
+						(int) (pos_y)), 1500);
+			}
+		});
+		button_coffee.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mMKSearch.poiSearchNearBy("咖啡厅", new GeoPoint((int) (pos_x),
+						(int) (pos_y)), 1500);
+			}
+		});
+
 		mData = new ArrayList<Map<String, String>>();
 		button.setOnClickListener(new OnClickListener() {
 			@Override
