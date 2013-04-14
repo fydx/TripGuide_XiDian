@@ -12,6 +12,7 @@
 
     <TextView
         android:id="@+id/busline_detail"
+        android:background="@drawable/textview_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -20,14 +21,5 @@
         android:text="路线详细"
         android:textSize="18dp"
         android:textColor="#000000" />
-
-    <Button
-        android:id="@+id/btn_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/busline_detail"
-        android:layout_marginTop="84dp"
-        android:text="test start" />
 
         </RelativeLayout>

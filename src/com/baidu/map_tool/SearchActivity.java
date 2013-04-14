@@ -70,6 +70,7 @@ public class SearchActivity extends Activity {
 		Log.e("get pos", pos_x + " " + pos_y);
 		listView = (ListView) findViewById(R.id.listView_search);
 		editText = (EditText) findViewById(R.id.edittext_search);
+		editText.clearFocus();//失去焦点，默认不弹出输入法
 		button = (Button) findViewById(R.id.search);
 		button_rest = (Button) findViewById(R.id.search_rest);
 		button_cinema = (Button) findViewById(R.id.search_cinema);

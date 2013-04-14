@@ -50,9 +50,9 @@ public class DetailActivity extends Activity {
 				Intent intent= new Intent();
 				intent.setClass(DetailActivity.this,mapActivity.class);
 				intent.putExtra("start","西安电子科技大学(南校区)");
-				Log.i("detail_pass_x", String.valueOf(pos.getLatitude()));
+			//	Log.i("detail_pass_x", String.valueOf(pos.getLatitude()));
 				intent.putExtra("end", pos.getNameString());
-				Log.i("detail_pass_y", String.valueOf(pos.getLongitude()));
+			//	Log.i("detail_pass_y", String.valueOf(pos.getLongitude()));
 				startActivity(intent);
 			
 			} 

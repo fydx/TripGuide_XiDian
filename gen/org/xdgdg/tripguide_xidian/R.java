@@ -89,14 +89,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab_bg_unselected=0x7f02002b;
         public static final int tab_divider=0x7f02002c;
         public static final int tab_text_selector=0x7f02002d;
-        public static final int welcome=0x7f02002e;
-        public static final int xiaozhai=0x7f02002f;
-        public static final int xidajie=0x7f020030;
+        public static final int textview_style=0x7f02002e;
+        public static final int welcome=0x7f02002f;
+        public static final int xiaozhai=0x7f020030;
+        public static final int xidajie=0x7f020031;
     }
     public static final class id {
-        public static final int action_settings=0x7f090024;
+        public static final int action_settings=0x7f090023;
         public static final int bmapsView=0x7f090020;
-        public static final int btn_test=0x7f090022;
         public static final int busline_detail=0x7f090021;
         public static final int button_set=0x7f090001;
         public static final int detail_area=0x7f090006;
@@ -128,7 +128,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int search_rest=0x7f09000c;
         public static final int search_tel=0x7f09001f;
         public static final int stoptime=0x7f090014;
-        public static final int tabsText=0x7f090023;
+        public static final int tabsText=0x7f090022;
         public static final int textView1=0x7f090015;
         public static final int textView_time=0x7f090013;
     }

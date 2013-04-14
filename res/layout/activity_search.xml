@@ -66,6 +66,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/search_rest"
         android:layout_marginTop="40dp"
+        android:singleLine="true"
         android:ems="10" />
       <ListView
         android:id="@+id/listView_search"

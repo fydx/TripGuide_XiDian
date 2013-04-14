@@ -108,7 +108,7 @@ public class mapActivity extends Activity {
 		Log.i("axlecho", "oncerate ok.");
 		
 	
-		btn_test = (Button)findViewById(R.id.btn_test);
+	/*	btn_test = (Button)findViewById(R.id.btn_test);
 		btn_test.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -121,7 +121,7 @@ public class mapActivity extends Activity {
 				tar_pt_y += 0.02;
 			}
 			
-		});
+		});*/
 	}
 
 	@Override
