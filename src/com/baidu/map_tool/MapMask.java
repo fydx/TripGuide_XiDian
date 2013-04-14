@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xdgdg.tripguide_xidian.MyApp;
 import org.xdgdg.tripguide_xidian.R;
 
 import android.app.Activity;
@@ -14,8 +13,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.MeasureSpec;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.Geometry;
 import com.baidu.mapapi.map.Graphic;
@@ -30,13 +31,11 @@ import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.mapapi.map.RouteOverlay;
 import com.baidu.mapapi.map.Symbol;
 import com.baidu.mapapi.map.TransitOverlay;
-import com.baidu.mapapi.map.MapView.LayoutParams;
 import com.baidu.mapapi.search.MKAddrInfo;
 import com.baidu.mapapi.search.MKBusLineResult;
 import com.baidu.mapapi.search.MKDrivingRouteResult;
 import com.baidu.mapapi.search.MKPlanNode;
 import com.baidu.mapapi.search.MKPoiResult;
-import com.baidu.mapapi.search.MKRoute;
 import com.baidu.mapapi.search.MKSearch;
 import com.baidu.mapapi.search.MKSearchListener;
 import com.baidu.mapapi.search.MKSuggestionResult;
@@ -76,15 +75,15 @@ public class MapMask {
 		
 	}
 
-	private void set_scrpos(double pos_x, double pos_y) {
+	private void set_scrpos(GeoPoint src_pt) {
 		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(mparent.map_view);
 		
 		
-		GeoPoint src_pt =new GeoPoint((int) (pos_x * 1e6),(int) (pos_y * 1e6));
+		//GeoPoint src_pt =new GeoPoint((int) (pos_x * 1e6),(int) (pos_y * 1e6));
 		
 		LocationData locData = new LocationData();
-		locData.latitude = pos_x;
-		locData.longitude = pos_y;
+		locData.latitude = src_pt.getLatitudeE6() / 1000000.0;
+		locData.longitude = src_pt.getLongitudeE6() / 1000000.0;
 		locData.direction = 200.0f;
 		myLocationOverlay.setData(locData);
 
@@ -94,10 +93,9 @@ public class MapMask {
 	}
 
 	
-	public void p2p_bywalk(double start_x, double start_y, double end_x,
-			double end_y) {
-		GeoPoint start = new GeoPoint((int) (start_x * 1e6),(int) (start_y * 1e6));
-		GeoPoint end   = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
+	public void p2p_bywalk(GeoPoint start, GeoPoint end) {
+//		GeoPoint start = new GeoPoint((int) (start_x * 1e6),(int) (start_y * 1e6));
+//		GeoPoint end   = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
 		MKSearch mSearch = new MKSearch();
 		mSearch.init(MapBase.Instance(null).getMapManager(),new resultListener());
 
@@ -195,7 +193,7 @@ public class MapMask {
 	public void cover_point(double point_x, double point_y) {
 		GeoPoint point = new GeoPoint((int) (point_x * 1e6),
 				(int) (point_y * 1e6));
-
+ 
 		// 构建点并显示
 		Geometry pointGeometry = new Geometry();
 
@@ -245,9 +243,10 @@ public class MapMask {
 		mparent.map_view.refresh();
 	}
 	
-	public void cover_pic(double point_x,double point_y,int pic_id){
+	public void cover_pic(GeoPoint pos ,int pic_id,String title){
 		Drawable marker = mparent.getResources().getDrawable(pic_id); //得到需要标在地图上的资源
-		OverlayItem item= new OverlayItem(new GeoPoint((int)(point_x * 1e6),(int)(point_y * 1e6)),"text","test");
+//		GeoPoint pos = new GeoPoint((int)(point_x * 1e6),(int)(point_y * 1e6));
+		OverlayItem item= new OverlayItem(pos,title,"test");
 		item.setMarker(marker);
 		
 		
@@ -396,6 +395,12 @@ public class MapMask {
 			//String tmp = result.getPlan(0).getLine(0).getTip();
 			Log.i("axlecho", tmp);
 
+			mparent.src_pt = result.getPlan(0).getStart();
+			mparent.current_pt = result.getPlan(0).getEnd();
+			
+			cover_pic(mparent.src_pt,R.drawable.icon_marka,"起点");
+			cover_pic(mparent.current_pt,R.drawable.icon_marka,"终点");
+			
 			if (mparent.tex_tip != null)
 				mparent.tex_tip.setText(tmp);
 			
@@ -421,7 +426,7 @@ public class MapMask {
 			
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
 			mparent.map_view.getController().zoomToSpan(walk_routeOverlay.getLatSpanE6(), walk_routeOverlay.getLonSpanE6());
-			mparent.map_view.getController().animateTo(result.getStart().pt);
+			mparent.map_view.getController().animateTo(result.getEnd().pt);
 
 		}
 	}
@@ -431,8 +436,8 @@ public class MapMask {
 		private List<OverlayItem> GeoList = new ArrayList<OverlayItem>();
 		private Context mContext;
 		private PopupOverlay pop = null;
-		private Button mBtn = null;
 		
+
 		private int current = -1;
 		OverItemT(Drawable marker, Context context) {
 			super(marker);
@@ -451,10 +456,10 @@ public class MapMask {
 					int pos_y = pt.getLongitudeE6();
 					Intent intent = new Intent();
 					intent.setClass(mparent.getApplicationContext(),SearchActivity.class);
-
+					
 					intent.putExtra("search_x", pos_x);
 					intent.putExtra("search_y", pos_y);
-					mparent.startActivity(intent);
+					mparent.startActivityForResult(intent,0);
 
 					Log.i("axlecho", String.valueOf(index) + "was clicked");
                 }
@@ -485,19 +490,21 @@ public class MapMask {
 
 		// 点击气泡事件
 		protected boolean onTap(int index) {
-
+			
+			View popview = LayoutInflater.from(mContext).inflate(R.layout.popup, null);// 获取要转换的View资源
+			TextView TestText = (TextView)popview.findViewById(R.id.test_text);
+			TestText.setText(GeoList.get(index).getTitle() + "\n");//将每个点的Title在弹窗中以文本形式显示出来	
+			
+		   Bitmap popbitmap = convertViewToBitmap(popview);  
+		   
 			Log.i("axlecho", "buble was clicked index :" + String.valueOf(index));
 			current = index;
-			Bitmap[] bmps = new Bitmap[3];
-			try {
-				bmps[0] = BitmapFactory.decodeStream(mContext.getAssets().open("marker1.png"));
-				bmps[1] = BitmapFactory.decodeStream(mContext.getAssets().open("marker2.png"));
-				bmps[2] = BitmapFactory.decodeStream(mContext.getAssets().open("marker3.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			Bitmap[] bmps = new Bitmap[1];
+//			bmps[0] = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.marker1);
+			bmps[0] = popbitmap;
+//			bmps[2] = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.marker3);
 			pop.showPopup(bmps, GeoList.get(index).getPoint(), 32);
-
+			
 			return true;
 		}
 
@@ -506,13 +513,19 @@ public class MapMask {
 			Log.i("axlecho", "other area was clicked");
 			if (pop != null) {
 				pop.hidePop();
-				if (mBtn != null) {
-					mparent.map_view.removeView(mBtn);
-					mBtn = null;
-				}
 			}
 			super.onTap(pt, mapView);
 			return false;
+		}
+		
+		public Bitmap convertViewToBitmap(View view) {
+			view.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+			view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+			view.buildDrawingCache();
+			Bitmap bitmap = view.getDrawingCache();
+
+			return bitmap;
 		}
 	};
 		

@@ -27,6 +27,7 @@ public class mapActivity extends Activity {
 	protected static final int INQUIREFIRSTLINE = 0x101;
 	private final int sleep_time = 2000;
 	
+	
 	// 原缩放级别
 	private final int zoom_level = 17;
 
@@ -37,13 +38,19 @@ public class mapActivity extends Activity {
 	private double src_pt_y = 108.83594160000007;
 
 	// 目标地址由外部activity传进来
-	private double tar_pt_x = 0;
-	private double tar_pt_y = 0;
+//	private double tar_pt_x = 34.1233959 + 0.01;
+//	private double tar_pt_y = 108.83594160000007 + 0.01;
 
 	MapView map_view = null;
 	Button btn_test = null;
 	TextView tex_tip = null;
 
+	String src_name;
+	String tar_name;
+	
+	GeoPoint current_pt;
+	GeoPoint src_pt;
+	
 	private MapController map_controller = null;
 	private MKOfflineMap mOffline = null;
 	private MapMask amask;
@@ -67,12 +74,10 @@ public class mapActivity extends Activity {
 		Log.i("axlecho", "set contentview ok.");
 
 		Intent intent = getIntent();
-		tar_pt_x = intent.getDoubleExtra("pos_x", 34.0000);
-		tar_pt_y = intent.getDoubleExtra("pos_y", 108.0000);
+		src_name = intent.getStringExtra("start");
+		tar_name = intent.getStringExtra("end");
 		
-//		test 小寨
-		tar_pt_x = 34.222936;
-		tar_pt_y = 108.946687;
+		Log.i("axlecho","src_name:" + src_name + " " + "tar_name:" + tar_name);
 		
 		Log.i("axlecho", "get intent ok.");
 
@@ -85,7 +90,7 @@ public class mapActivity extends Activity {
 		Log.i("axlecho", "get content wight ok.");
 
 		// 加载离线地图
-		// scanofflinemap();
+		//scanofflinemap();
 
 		Log.i("axlecho", "scanofflinemap ok.");
 
@@ -100,28 +105,32 @@ public class mapActivity extends Activity {
 		// 启动初始化查询
 		new Thread(new LooperThread()).start();
 		Log.i("axlecho", "start thread ok.");
-
-		// amask.set_scrpos(src_pt_x, src_pt_y);
-
-		amask.cover_pic(src_pt_x, src_pt_y, R.drawable.icon_marka);
-		amask.cover_pic(tar_pt_x, tar_pt_y, R.drawable.icon_markb);
-		Log.i("axlecho", "oncerate ok.");
 		
-	
-	/*	btn_test = (Button)findViewById(R.id.btn_test);
-		btn_test.setOnClickListener(new OnClickListener(){
+		Log.i("axlecho", "oncerate ok.");
+	}
 
-			@Override
-			public void onClick(View arg0) {
-				amask.p2p_bywalk(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
-				src_pt_x = tar_pt_x;
-				src_pt_y = tar_pt_y;
-				
-				tar_pt_x += 0.02;
-				tar_pt_y += 0.02;
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+		if (requestCode == 0) {
+			if (resultCode != RESULT_OK) {
+				Log.e("axlecho", "bad Activity result.");
+				return;
+			}
+			Bundle extras = intent.getExtras();
+			if (extras == null) {
+				Log.e("axlecho", "bad intent.");
+				return;
 			}
 			
-		});*/
+			GeoPoint pt = new GeoPoint(extras.getInt("pos_x"),extras.getInt("pos_y"));
+			String title = extras.getString("name");
+			
+			amask.cover_pic(pt, R.drawable.icon_marke,title);
+			amask.p2p_bywalk(current_pt, pt);
+			current_pt = pt;
+		}
 	}
 
 	@Override
@@ -160,9 +169,8 @@ public class mapActivity extends Activity {
 	}
 
 	public void setbegin() {
-		GeoPoint pt_begin = new GeoPoint((int) (tar_pt_x * 1E6),
-				(int) (tar_pt_y * 1E6));
-		Log.i("mapActivity设定地点", String.valueOf(tar_pt_x * 1E6)+"  "+ String.valueOf(tar_pt_y* 1E6));
+		GeoPoint pt_begin = new GeoPoint((int) (src_pt_x * 1E6),(int) (src_pt_y * 1E6));
+		Log.i("mapActivity设定地点", String.valueOf(src_pt_x * 1E6)+"  "+ String.valueOf(src_pt_y* 1E6));
 		map_controller.setCenter(pt_begin);
 		map_controller.setZoom(zoom_level);
 	}
@@ -217,8 +225,8 @@ public class mapActivity extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case mapActivity.INQUIREFIRSTLINE:
-//				amask.p2p_bybus("西安电子科技大学(南校区)", "小寨");
-				amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
+				amask.p2p_bybus(src_name, tar_name);
+//				amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
 				break;
 			}
 			super.handleMessage(msg);

@@ -54,6 +54,7 @@ public class SearchActivity extends Activity {
 	private BMapManager mBMapMan = null;
 	private Button button, button_cinema, button_ktv, button_rest,
 			button_coffee;
+	private MKPoiInfo clicked_pt = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class SearchActivity extends Activity {
 		Log.e("get pos", pos_x + " " + pos_y);
 		listView = (ListView) findViewById(R.id.listView_search);
 		editText = (EditText) findViewById(R.id.edittext_search);
-		editText.clearFocus();//失去焦点，默认不弹出输入法
+		editText.clearFocus();// 失去焦点，默认不弹出输入法
 		button = (Button) findViewById(R.id.search);
 		button_rest = (Button) findViewById(R.id.search_rest);
 		button_cinema = (Button) findViewById(R.id.search_cinema);
@@ -81,6 +82,7 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				editText.setText("餐厅");
 				mMKSearch.poiSearchNearBy("餐厅", new GeoPoint((int) (pos_x),
 						(int) (pos_y)), 1500);
 			}
@@ -90,6 +92,7 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				editText.setText("");
 				mMKSearch.poiSearchNearBy("电影院", new GeoPoint((int) (pos_x),
 						(int) (pos_y)), 1500);
 			}
@@ -99,6 +102,7 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				editText.setText("ktv");
 				mMKSearch.poiSearchNearBy("KTV", new GeoPoint((int) (pos_x),
 						(int) (pos_y)), 1500);
 			}
@@ -108,6 +112,7 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				editText.setText("咖啡厅");
 				mMKSearch.poiSearchNearBy("咖啡厅", new GeoPoint((int) (pos_x),
 						(int) (pos_y)), 1500);
 			}
@@ -159,9 +164,10 @@ public class SearchActivity extends Activity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
 					long arg3) {
 				// TODO Auto-generated method stub
+				clicked_pt = pois.get(index);
 				init_dialog(); // 仅初始化，未定义传值！
 			}
 		});
@@ -248,7 +254,8 @@ public class SearchActivity extends Activity {
 						+ "小时");
 			}
 		});
-		new AlertDialog.Builder(SearchActivity.this).setTitle("选择停留时间(小时)")
+		new AlertDialog.Builder(SearchActivity.this)
+				.setTitle("选择停留时间(小时)")
 				.setView(dialogView)
 				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
@@ -257,7 +264,15 @@ public class SearchActivity extends Activity {
 						// TODO Auto-generated method stub
 						time_hour = seekBar.getProgress();
 						Log.e("stoptime", String.valueOf(time_hour));
+						Intent intent = new Intent();
 
+						intent.putExtra("pos_x", clicked_pt.pt.getLatitudeE6());
+						intent.putExtra("pos_y", clicked_pt.pt.getLongitudeE6());
+						intent.putExtra("name", clicked_pt.name);
+
+						setResult(RESULT_OK, intent);
+
+						finish();
 					}
 				})
 				.setNegativeButton("取消", new DialogInterface.OnClickListener() {
