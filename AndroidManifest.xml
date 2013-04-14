@@ -79,11 +79,13 @@
         </activity>
         <activity
             android:name="com.baidu.map_tool.SearchActivity"
-            android:label="@string/title_activity_search" >
+            android:label="@string/title_activity_search" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.baidu.map_tool.result_mapActivity"
-            android:label="@string/title_activity_show_route" >
+            android:label="@string/title_activity_show_route"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

@@ -31,6 +31,9 @@ public class result_mapActivity extends mapActivity{
 	private List<Integer> rec_pts_y = null;
 	private route rec_route = null;	
 	private BMapManager mBMapMan = null;
+	private int[] markers={R.drawable.icon_marka,R.drawable.icon_markb,R.drawable.icon_markc
+			,R.drawable.icon_markd,R.drawable.icon_marke,R.drawable.icon_markf,R.drawable.icon_markg,
+			R.drawable.icon_markh,R.drawable.icon_marki,R.drawable.icon_markj};
 	// 定位相关
 		LocationClient mLocClient;
 		public MyLocationListenner myListener = new MyLocationListenner();
@@ -150,7 +153,7 @@ public class result_mapActivity extends mapActivity{
 		for(int i = 0;i < rec_name.size();i ++){
 			GeoPoint pos = new GeoPoint(rec_pts_x.get(i),rec_pts_y.get(i));
 			Log.i("axlecho","x:" + String.valueOf(rec_pts_x.get(i)) + " " + "y:" + String.valueOf(rec_pts_y.get(i)));
-			amask.cover_pic(pos, R.drawable.icon_marka, rec_name.get(i));
+			amask.cover_pic(pos, markers[i], rec_name.get(i));
 		}
 	}
 	public void show_Mypos(){

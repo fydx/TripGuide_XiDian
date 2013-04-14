@@ -5,6 +5,8 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
+
 import com.baidu.mapapi.search.MKPoiInfo;
 
 public class route implements Serializable {
@@ -37,7 +39,7 @@ public class route implements Serializable {
 	}
 
 	public route() {
-
+	
 	}
 
 	
@@ -162,5 +164,16 @@ public class route implements Serializable {
 			//temp.
 		}
 		return  temp;
+	}
+	public void addpoint(String name,int x ,int y)
+	{
+	/*	效率若不足考虑sb
+	 * StringBuilder sb_name =new StringBuilder(this.poi_name),;
+		sb_name.append(name+ "#");
+		this.poi_name= sb_name.toString(); */
+	    this.poi_name +=(name+"#");
+	    this.poi_x += (String.valueOf(x)+"#");
+	    this.poi_y += (String.valueOf(y)+"#");
+		
 	}
 }

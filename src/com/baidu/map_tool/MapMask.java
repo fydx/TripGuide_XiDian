@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xdgdg.tripguide_xidian.R;
+import org.xdgdg.tripguide_xidian.route;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.baidu.mapapi.map.Geometry;
@@ -46,7 +48,7 @@ public class MapMask{
 
 	private final int POINTSIZE = 5;
 	private mapActivity mparent = null;
-
+	//private route route_1;
 	//自定义图层
 	private GraphicsOverlay graphicsOverlay = null;
 	
@@ -74,7 +76,17 @@ public class MapMask{
 		walk_routeOverlay = new RouteOverlay(mparent,mparent.map_view);
 		mparent.map_view.getOverlays().add(walk_routeOverlay);
 		
-		
+	/*	mparent.btn_end.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				route_1.setBusline(mparent.tex_tip.getText().toString());
+				Log.i("busline", mparent.tex_tip.getText().toString());
+				mparent.db.save(route_1);
+			}
+		});*/
 	
 	}
 
@@ -333,7 +345,7 @@ public class MapMask{
 				Log.i("axlecho", "result is null.");
 				return;
 			}
-
+			
 			Log.i("axlecho", "onGetDrivingRouteResult is ok");
 			RouteOverlay routeOverlay = new RouteOverlay(mparent,
 					mparent.map_view);
