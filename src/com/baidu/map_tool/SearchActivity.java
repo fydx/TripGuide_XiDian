@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -72,17 +73,21 @@ public class SearchActivity extends Activity {
 		listView = (ListView) findViewById(R.id.listView_search);
 		editText = (EditText) findViewById(R.id.edittext_search);
 		editText.clearFocus();// 失去焦点，默认不弹出输入法
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		button = (Button) findViewById(R.id.search);
 		button_rest = (Button) findViewById(R.id.search_rest);
 		button_cinema = (Button) findViewById(R.id.search_cinema);
 		button_ktv = (Button) findViewById(R.id.search_ktv);
 		button_coffee = (Button) findViewById(R.id.search_coffee);
+
 		button_rest.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				editText.setText("餐厅");
+				
 				mMKSearch.poiSearchNearBy("餐厅", new GeoPoint((int) (pos_x),
 						(int) (pos_y)), 1500);
 			}
@@ -92,18 +97,8 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				editText.setText("");
+				editText.setText("电影院");
 				mMKSearch.poiSearchNearBy("电影院", new GeoPoint((int) (pos_x),
-						(int) (pos_y)), 1500);
-			}
-		});
-		button_ktv.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				editText.setText("ktv");
-				mMKSearch.poiSearchNearBy("KTV", new GeoPoint((int) (pos_x),
 						(int) (pos_y)), 1500);
 			}
 		});
@@ -118,6 +113,17 @@ public class SearchActivity extends Activity {
 			}
 		});
 
+		button_ktv.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				editText.setText("KTV");
+				mMKSearch.poiSearchNearBy("KTV", new GeoPoint((int) (pos_x),
+						(int) (pos_y)), 1500);
+			}
+		});
+		
 		mData = new ArrayList<Map<String, String>>();
 		button.setOnClickListener(new OnClickListener() {
 			@Override
@@ -194,6 +200,7 @@ public class SearchActivity extends Activity {
 			}
 			pois.clear();
 			pois = res.getAllPoi();
+			
 			initListView(); // 初始化Listview
 			Log.e("poi num", pois.size() + "");
 		}

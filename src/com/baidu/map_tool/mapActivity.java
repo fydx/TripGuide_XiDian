@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -25,7 +23,9 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 public class mapActivity extends Activity {
 	
 	protected static final int INQUIREFIRSTLINE = 0x101;
-	private final int sleep_time = 2000;
+	protected static final int INQUIRESECONDLINE = 0x102;
+	
+	protected final int sleep_time = 2000;
 	
 	
 	// 原缩放级别
@@ -42,7 +42,7 @@ public class mapActivity extends Activity {
 //	private double tar_pt_y = 108.83594160000007 + 0.01;
 
 	MapView map_view = null;
-	Button btn_test = null;
+	Button btn_end = null;
 	TextView tex_tip = null;
 
 	String src_name;
@@ -51,62 +51,23 @@ public class mapActivity extends Activity {
 	GeoPoint current_pt;
 	GeoPoint src_pt;
 	
-	private MapController map_controller = null;
-	private MKOfflineMap mOffline = null;
-	private MapMask amask;
-
-	public void onCreate(Bundle savedInstanceState) {
+	protected MapController map_controller = null;
+	protected MKOfflineMap mOffline = null;
+	protected MapMask amask;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		Log.i("axlecho", "activity create.");
-		MapBase.Instance(this);
-
-		Log.i("axlecho", "init instance ok");
-
+		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 		Log.i("axlecho", "set no title ok.");
-
-		setContentView(R.layout.map);
-
-		Log.i("axlecho", "set contentview ok.");
-
-		Intent intent = getIntent();
-		src_name = intent.getStringExtra("start");
-		tar_name = intent.getStringExtra("end");
 		
-		Log.i("axlecho","src_name:" + src_name + " " + "tar_name:" + tar_name);
+		MapBase.Instance(this);
+		Log.i("axlecho", "init instance ok");
 		
-		Log.i("axlecho", "get intent ok.");
-
-		tex_tip = (TextView) findViewById(R.id.busline_detail);
-		tex_tip.setText("loading");
-
-		map_view = (MapView) findViewById(R.id.bmapsView);
-		map_controller = map_view.getController();
-
-		Log.i("axlecho", "get content wight ok.");
-
-		// 加载离线地图
-		//scanofflinemap();
-
-		Log.i("axlecho", "scanofflinemap ok.");
-
-		// 设置起始
-		setbegin();
-		Log.i("axlecho", "setbegin ok.");
-
-		// 地图图形处理工具
-		amask = new MapMask(this);
-		Log.i("axlecho", "new mask ok.");
-
-		// 启动初始化查询
-		new Thread(new LooperThread()).start();
-		Log.i("axlecho", "start thread ok.");
-		
-		Log.i("axlecho", "oncerate ok.");
+		init();
 	}
 
 	@Override
@@ -159,7 +120,6 @@ public class mapActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		map_view.onSaveInstanceState(outState);
-
 	}
 
 	@Override
@@ -226,11 +186,53 @@ public class mapActivity extends Activity {
 			switch (msg.what) {
 			case mapActivity.INQUIREFIRSTLINE:
 				amask.p2p_bybus(src_name, tar_name);
+				Log.i("axlecho","parent handler");
 //				amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
 				break;
 			}
 			super.handleMessage(msg);
 		}
-	};
 
+
+	};
+		
+	protected void init() {
+		Log.i("axlecho", "parent init");
+
+		setContentView(R.layout.map);
+		Log.i("axlecho", "set contentview ok.");
+
+		Intent intent = getIntent();
+		src_name = intent.getStringExtra("start");
+		tar_name = intent.getStringExtra("end");
+		Log.i("axlecho", "src_name:" + src_name + " " + "tar_name:" + tar_name);
+		Log.i("axlecho", "get intent ok.");
+
+		tex_tip = (TextView) findViewById(R.id.busline_detail);
+		tex_tip.setText("loading");
+
+		map_view = (MapView) findViewById(R.id.bmapsView);
+		map_controller = map_view.getController();
+		Log.i("axlecho", "get content wight ok.");
+
+		// 加载离线地图
+		// scanofflinemap();
+//		Log.i("axlecho", "scanofflinemap ok.");
+
+		// 设置起始
+		setbegin();
+		Log.i("axlecho", "setbegin ok.");
+
+		// 地图图形处理工具
+		amask = new MapMask(this);
+		Log.i("axlecho", "new mask ok.");
+
+		// 启动初始化查询
+		new Thread(new LooperThread()).start();
+		Log.i("axlecho", "start thread ok.");
+
+		Log.i("axlecho", "oncerate ok.");
+	}
+	
+	
 }

@@ -7,10 +7,16 @@ import java.util.Map;
 
 import net.tsz.afinal.FinalDb;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.baidu.map_tool.result_mapActivity;
 
 public class MyRouteActivity extends Activity {
 	private FinalDb db;
@@ -29,7 +35,7 @@ public class MyRouteActivity extends Activity {
 		{
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("date","录入时间"+rou.getDateString());
-			map.put("detail", rou.getRoute_detail());
+			map.put("detail", rou.getPoi_name());
 			mData.add(map);
 		}
 		mSchedule = new SimpleAdapter(this, // 没什么解释
@@ -46,7 +52,19 @@ public class MyRouteActivity extends Activity {
 		// 添加并且显示
 		listView.setDividerHeight(0);
 		listView.setAdapter(mSchedule);
-	}
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
+					long arg3) {
+				// TODO Auto-generated method stub
+			 Intent intent  = new Intent();
+			 intent.setClass(MyRouteActivity.this, result_mapActivity.class);
+			 intent.putExtra("route", routes.get(index));
+			 startActivity(intent);
+			}
+		});
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

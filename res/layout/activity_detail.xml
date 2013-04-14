@@ -87,24 +87,24 @@
         android:textSize="13dp"
         android:text="到达需用时间" />
 
-    <ImageView
+  <!-- <ImageView
         android:id="@+id/pic_detailcontent"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:paddingTop="1dp"
         android:layout_alignLeft="@+id/pic_detail_bottom"
         android:layout_alignRight="@+id/pic_bottom_name"
         android:layout_below="@+id/pic_bottom_name"
-        android:src="@drawable/detailpicforcontent" />
+        android:src="@drawable/detailpicforcontent" /> -->  
 
     <TextView
         android:id="@+id/pos_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/pic_detailcontent"
         android:layout_below="@+id/pic_detail_bottom"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="1dp"
         android:layout_marginTop="18dp"
+        android:background="@drawable/textview_style_gray"
         android:text="详情" />
 
 </RelativeLayout>

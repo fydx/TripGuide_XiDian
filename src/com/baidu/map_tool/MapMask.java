@@ -1,6 +1,5 @@
 package com.baidu.map_tool;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +41,8 @@ import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 
-public class MapMask {
+
+public class MapMask{
 
 	private final int POINTSIZE = 5;
 	private mapActivity mparent = null;
@@ -62,7 +61,9 @@ public class MapMask {
  
 	public MapMask(Activity _parent) {
 		mparent = (mapActivity) _parent;
+		
 		items = new OverItemT(mparent.getResources().getDrawable(R.drawable.ic_launcher),mparent); //得到需要标在地图上的资源)
+		mparent.map_view.getOverlays().add(items);
 		
 		graphicsOverlay = new GraphicsOverlay(mparent.map_view);
 		mparent.map_view.getOverlays().add(graphicsOverlay);
@@ -73,6 +74,8 @@ public class MapMask {
 		walk_routeOverlay = new RouteOverlay(mparent,mparent.map_view);
 		mparent.map_view.getOverlays().add(walk_routeOverlay);
 		
+		
+	
 	}
 
 	private void set_scrpos(GeoPoint src_pt) {
@@ -92,7 +95,6 @@ public class MapMask {
 		mparent.map_view.getController().animateTo(src_pt);
 	}
 
-	
 	public void p2p_bywalk(GeoPoint start, GeoPoint end) {
 //		GeoPoint start = new GeoPoint((int) (start_x * 1e6),(int) (start_y * 1e6));
 //		GeoPoint end   = new GeoPoint((int) (end_x * 1e6), (int) (end_y * 1e6));
@@ -190,9 +192,8 @@ public class MapMask {
 		mparent.map_view.refresh();
 	}
 
-	public void cover_point(double point_x, double point_y) {
-		GeoPoint point = new GeoPoint((int) (point_x * 1e6),
-				(int) (point_y * 1e6));
+	public void cover_point(GeoPoint point) {
+//		GeoPoint point = new GeoPoint((int) (point_x * 1e6),(int) (point_y * 1e6));
  
 		// 构建点并显示
 		Geometry pointGeometry = new Geometry();
@@ -246,13 +247,13 @@ public class MapMask {
 	public void cover_pic(GeoPoint pos ,int pic_id,String title){
 		Drawable marker = mparent.getResources().getDrawable(pic_id); //得到需要标在地图上的资源
 //		GeoPoint pos = new GeoPoint((int)(point_x * 1e6),(int)(point_y * 1e6));
+		
+		if(marker == null)Log.e("axlecho","marker is null");
+		
 		OverlayItem item= new OverlayItem(pos,title,"test");
 		item.setMarker(marker);
-		
-		
 		items.additem(item);
 		
-		mparent.map_view.getOverlays().add(items); //添加ItemizedOverlay实例到mMapView
 		mparent.map_view.refresh();//刷新地图
 		Log.i("axlecho","cover_pic ok.");
 	}
@@ -277,7 +278,7 @@ public class MapMask {
 			count ++;
 			}
 			
-			cover_point(linePoints[count - 1].getLatitudeE6() / 1000000.0, linePoints[count - 1].getLongitudeE6() / 1000000.0);
+//			cover_point(linePoints[count - 1].getLatitudeE6() / 1000000.0, linePoints[count - 1].getLongitudeE6() / 1000000.0);
 		}
 		lineGeometry.setPolyLine(linePoints);
 		
@@ -406,7 +407,7 @@ public class MapMask {
 			
 			// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
 			mparent.map_view.getController().zoomToSpan(transit_routeOverlay.getLatSpanE6(), transit_routeOverlay.getLonSpanE6());
-			mparent.map_view.getController().animateTo(result.getStart().pt);
+			mparent.map_view.getController().animateTo(result.getEnd().pt);
 
 		}
 
@@ -528,6 +529,6 @@ public class MapMask {
 			return bitmap;
 		}
 	};
-		
-		
+
+	
 }
