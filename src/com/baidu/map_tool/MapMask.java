@@ -269,7 +269,7 @@ public class MapMask {
 
 	// points_list.size()　表示有几段路线
 	// points_list.get(i).size()　表示第i段路线有几个点
-	private void cover_lines(ArrayList<GeoPoint> points_list) {
+	public void cover_lines(ArrayList<GeoPoint> points_list) {
 
 		Log.i("axlecho", String.valueOf(points_list.size()));
 		
@@ -290,7 +290,6 @@ public class MapMask {
 		lineColor.alpha = 180;
 
 		lineSymbol.setLineSymbol(lineColor, 5);
-
 		Graphic lineGraphic = new Graphic(lineGeometry, lineSymbol);
 
 		graphicsOverlay.setData(lineGraphic);

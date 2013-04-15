@@ -1,5 +1,6 @@
 package com.baidu.map_tool;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.xdgdg.tripguide_xidian.R;
@@ -50,22 +51,33 @@ public class result_mapActivity extends mapActivity {
 		rec_pts_y = rec_route.poi_yToList(rec_route.getPoi_y());
 
 		GeoPoint pos = new GeoPoint((int) (34.1233959 * 1e6),(int) (108.83594160000007 * 1e6));
-		GeoPoint pos1 = new GeoPoint((int) (34.14 * 1e6), (int) (108.85 * 1e6));
 		
-		amask.cover_point(pos);
 		amask.cover_pic(pos, R.drawable.icon_marka, rec_name.get(i));
-		amask.cover_pic(pos1, R.drawable.icon_marka, rec_name.get(i));
-		// amask.cover_pic(pos,R.drawable.icon_marka,"起点");
 
-		print_point();
+		ArrayList<GeoPoint> lines = make_point();
+
+		lines.add(pos);
+		rec_name.add("西电");
+		amask.cover_lines(lines);
+		print_point(lines);
+		
 	}
 
-	public void print_point() {
+	public ArrayList<GeoPoint> make_point(){
+		ArrayList<GeoPoint> lines = new ArrayList<GeoPoint>();
+		
 		for (int i = 0; i < rec_name.size(); i++) {
 			GeoPoint pos = new GeoPoint(rec_pts_x.get(i), rec_pts_y.get(i));
 			Log.i("axlecho", "x:" + String.valueOf(rec_pts_x.get(i)) + " "+ "y:" + String.valueOf(rec_pts_y.get(i)));
-			amask.cover_pic(pos, R.drawable.icon_marka, rec_name.get(i));
+			lines.add(pos);
 		}
+		return lines;
+	}
+	
+	public void print_point(ArrayList<GeoPoint> lines) {
+		for(int i = 0;i < lines.size();i ++)
+			amask.cover_pic(lines.get(i), R.drawable.icon_marka, rec_name.get(i));
+		
 	}
 
 	class result_MapMask extends MapMask {

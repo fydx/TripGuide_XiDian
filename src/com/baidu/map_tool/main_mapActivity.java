@@ -33,8 +33,6 @@ public class main_mapActivity extends mapActivity {
 	GeoPoint current_pt;
 	GeoPoint src_pt;
 
-	
-	
 	main_MapMask amask;
 
 	//持久化
@@ -107,6 +105,7 @@ public class main_mapActivity extends mapActivity {
 				Log.i("clicker", "set!");
 				route_1.setBusline(tex_tip.getText().toString());
 				Log.i("busline", tex_tip.getText().toString());
+				
 				db.save(route_1);
 			}
 

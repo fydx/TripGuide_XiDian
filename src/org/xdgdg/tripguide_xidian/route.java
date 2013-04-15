@@ -28,6 +28,8 @@ public class route implements Serializable {
 	public void setBusline(String busline) {
 		this.busline = busline;
 	}
+	
+	
 	public route(String dateString, String poi_x,
 			String poi_y, String poi_name) {
 		super();
