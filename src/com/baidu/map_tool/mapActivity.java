@@ -1,5 +1,7 @@
 package com.baidu.map_tool;
 
+import java.util.List;
+
 import org.xdgdg.tripguide_xidian.R;
 
 import android.app.Activity;
@@ -25,7 +27,9 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 public class mapActivity extends Activity {
 	
 	protected static final int INQUIREFIRSTLINE = 0x101;
-	private final int sleep_time = 2000;
+	protected static final int INQUIRESECONDLINE = 0x102;
+	
+	protected final int sleep_time = 2000;
 	
 	
 	// 原缩放级别
@@ -41,96 +45,26 @@ public class mapActivity extends Activity {
 //	private double tar_pt_x = 34.1233959 + 0.01;
 //	private double tar_pt_y = 108.83594160000007 + 0.01;
 
-	MapView map_view = null;
-	Button btn_test = null;
-	TextView tex_tip = null;
+	protected MapView map_view = null;
 
-	String src_name;
-	String tar_name;
 	
-	GeoPoint current_pt;
-	GeoPoint src_pt;
+	protected MapController map_controller = null;
+	protected MKOfflineMap mOffline = null;
+//	protected MapMask amask;
 	
-	private MapController map_controller = null;
-	private MKOfflineMap mOffline = null;
-	private MapMask amask;
-
-	public void onCreate(Bundle savedInstanceState) {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		Log.i("axlecho", "activity create.");
-		MapBase.Instance(this);
-
-		Log.i("axlecho", "init instance ok");
-
+		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 		Log.i("axlecho", "set no title ok.");
-
-		setContentView(R.layout.map);
-
-		Log.i("axlecho", "set contentview ok.");
-
-		Intent intent = getIntent();
-		src_name = intent.getStringExtra("start");
-		tar_name = intent.getStringExtra("end");
 		
-		Log.i("axlecho","src_name:" + src_name + " " + "tar_name:" + tar_name);
+		MapBase.Instance(this);
+		Log.i("axlecho", "init instance ok");
 		
-		Log.i("axlecho", "get intent ok.");
-
-		tex_tip = (TextView) findViewById(R.id.busline_detail);
-		tex_tip.setText("loading");
-
-		map_view = (MapView) findViewById(R.id.bmapsView);
-		map_controller = map_view.getController();
-
-		Log.i("axlecho", "get content wight ok.");
-
-		// 加载离线地图
-		//scanofflinemap();
-
-		Log.i("axlecho", "scanofflinemap ok.");
-
-		// 设置起始
-		setbegin();
-		Log.i("axlecho", "setbegin ok.");
-
-		// 地图图形处理工具
-		amask = new MapMask(this);
-		Log.i("axlecho", "new mask ok.");
-
-		// 启动初始化查询
-		new Thread(new LooperThread()).start();
-		Log.i("axlecho", "start thread ok.");
-		
-		Log.i("axlecho", "oncerate ok.");
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == 0) {
-			if (resultCode != RESULT_OK) {
-				Log.e("axlecho", "bad Activity result.");
-				return;
-			}
-			Bundle extras = intent.getExtras();
-			if (extras == null) {
-				Log.e("axlecho", "bad intent.");
-				return;
-			}
-			
-			GeoPoint pt = new GeoPoint(extras.getInt("pos_x"),extras.getInt("pos_y"));
-			String title = extras.getString("name");
-			
-			amask.cover_pic(pt, R.drawable.icon_marke,title);
-			amask.p2p_bywalk(current_pt, pt);
-			current_pt = pt;
-		}
+		init();
 	}
 
 	@Override
@@ -159,7 +93,6 @@ public class mapActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		map_view.onSaveInstanceState(outState);
-
 	}
 
 	@Override
@@ -204,33 +137,7 @@ public class mapActivity extends Activity {
 
 	}
 
-	private class LooperThread extends Thread {
-
-		public void run() {
-			try {
-				Thread.sleep(sleep_time);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			Message message = new Message();
-			message.what = mapActivity.INQUIREFIRSTLINE;
-
-			mapActivity.this.event_handle.sendMessage(message);
-		}
-	};
-
-	private Handler event_handle = new Handler() {
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case mapActivity.INQUIREFIRSTLINE:
-				amask.p2p_bybus(src_name, tar_name);
-//				amask.p2p_bybus(src_pt_x, src_pt_y, tar_pt_x, tar_pt_y);
-				break;
-			}
-			super.handleMessage(msg);
-		}
-	};
-
+		
+	protected void init() {}
+	
 }

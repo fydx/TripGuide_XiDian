@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baidu.map_tool.SearchActivity;
+import com.baidu.map_tool.main_mapActivity;
 import com.baidu.map_tool.mapActivity;
 
 public class DetailActivity extends Activity {
@@ -48,7 +49,7 @@ public class DetailActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent= new Intent();
-				intent.setClass(DetailActivity.this,mapActivity.class);
+				intent.setClass(DetailActivity.this,main_mapActivity.class);
 				intent.putExtra("start","西安电子科技大学(南校区)");
 			//	Log.i("detail_pass_x", String.valueOf(pos.getLatitude()));
 				intent.putExtra("end", pos.getNameString());

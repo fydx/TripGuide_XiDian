@@ -95,8 +95,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int xidajie=0x7f020031;
     }
     public static final class id {
-        public static final int action_settings=0x7f090025;
+        public static final int action_settings=0x7f090026;
         public static final int bmapsView=0x7f090020;
+        public static final int bmapsresultView=0x7f090024;
         public static final int busline_detail=0x7f090021;
         public static final int button_end=0x7f090022;
         public static final int button_set=0x7f090001;
@@ -129,7 +130,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int search_rest=0x7f09000c;
         public static final int search_tel=0x7f09001f;
         public static final int stoptime=0x7f090014;
-        public static final int tabsText=0x7f090024;
+        public static final int tabsText=0x7f090025;
         public static final int test_text=0x7f090023;
         public static final int textView1=0x7f090015;
         public static final int textView_time=0x7f090013;
@@ -148,7 +149,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int listitem_search=0x7f03000a;
         public static final int map=0x7f03000b;
         public static final int popup=0x7f03000c;
-        public static final int tabs_bg=0x7f03000d;
+        public static final int result_map=0x7f03000d;
+        public static final int tabs_bg=0x7f03000e;
     }
     public static final class menu {
         public static final int destination=0x7f080000;

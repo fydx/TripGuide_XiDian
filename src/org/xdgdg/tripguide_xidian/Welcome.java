@@ -137,8 +137,11 @@ public class Welcome extends Activity {
 
 	private void db_my_init() {
 		String dateString = "2013-04-12";
-		String detailString = "916";
-		route route = new route(dateString, detailString);
+
+		String pos_xString="34128452#34228870#34231057#34226963#";
+	    String pos_yString="108847062#108953122#108952875#108953596#";
+	    String nameString="西安电子科技大学(南校区)#小寨#必胜客(小寨餐厅)#竹园村火锅小寨店#";
+		route route = new route(dateString, pos_xString,pos_yString,nameString);
 		db_welcome.save(route);
 	}
 

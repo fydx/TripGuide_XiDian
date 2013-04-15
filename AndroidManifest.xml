@@ -58,11 +58,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.baidu.map_tool.mapActivity"
-            android:label="map"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="org.xdgdg.tripguide_xidian.DetailActivity"
             android:label="@string/title_activity_detail"
             android:screenOrientation="portrait" >
@@ -72,8 +67,13 @@
             android:label="@string/title_activity_search" >
         </activity>
         <activity
-            android:name="org.xdgdg.tripguide_xidian.ShowRouteActivity"
+            android:name="com.baidu.map_tool.result_mapActivity"
             android:label="@string/title_activity_show_route" >
+        </activity>
+        <activity
+            android:name="com.baidu.map_tool.main_mapActivity"
+            android:label="map"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
