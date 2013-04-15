@@ -28,6 +28,8 @@ public class route implements Serializable {
 	public void setBusline(String busline) {
 		this.busline = busline;
 	}
+	
+	
 	public route(String dateString, String poi_x,
 			String poi_y, String poi_name) {
 		super();
@@ -39,7 +41,9 @@ public class route implements Serializable {
 	}
 
 	public route() {
-	
+		poi_x = "34123395#";
+		poi_y = "108835941#";
+		poi_name = "西电#";
 	}
 
 	
@@ -86,7 +90,7 @@ public class route implements Serializable {
 
 	
 	public String poi_xToString(List<MKPoiInfo> poiInfo) {
-		poi_x = "";
+		
 		for (MKPoiInfo info : poiInfo) {
 			poi_x += Integer.toString(info.pt.getLatitudeE6()) + "#";
 		}
@@ -110,7 +114,7 @@ public class route implements Serializable {
 	}
 
 	public String poi_yToString(List<MKPoiInfo> poiInfo) {
-		poi_y = "";
+		
 		for (MKPoiInfo info : poiInfo) {
 			poi_y += Integer.toString(info.pt.getLongitudeE6()) + "#";
 		}
@@ -134,7 +138,7 @@ public class route implements Serializable {
 	}
 
 	public String poi_nameToString(List<MKPoiInfo> poiInfo) {
-		String poi_name = "";
+		
 		for (MKPoiInfo info : poiInfo) {
 			poi_name += info.name + "#";
 		}

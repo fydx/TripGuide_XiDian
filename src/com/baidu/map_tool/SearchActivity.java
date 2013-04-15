@@ -167,6 +167,10 @@ public class SearchActivity extends Activity {
 		// 添加并且显示
 		listView.setDividerHeight(0);
 		listView.setAdapter(mSchedule);
+		LayoutInflater factory = LayoutInflater.from(SearchActivity.this);
+		final View dialogView = factory.inflate(R.layout.dialog_time, null);
+		seekBar = (SeekBar) dialogView.findViewById(R.id.stoptime);
+		textView_time = (TextView) dialogView.findViewById(R.id.textView_time);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -174,7 +178,18 @@ public class SearchActivity extends Activity {
 					long arg3) {
 				// TODO Auto-generated method stub
 				clicked_pt = pois.get(index);
-				init_dialog(); // 仅初始化，未定义传值！
+			//	init_dialog(); // 仅初始化，未定义传值！//暂时取消时间选择
+				time_hour = seekBar.getProgress();
+				Log.e("stoptime", String.valueOf(time_hour));
+				Intent intent = new Intent();
+
+				intent.putExtra("pos_x", clicked_pt.pt.getLatitudeE6());
+				intent.putExtra("pos_y", clicked_pt.pt.getLongitudeE6());
+				intent.putExtra("name", clicked_pt.name);
+
+				setResult(RESULT_OK, intent);
+
+				finish();
 			}
 		});
 	}

@@ -112,10 +112,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int xidajie=0x7f020042;
     }
     public static final class id {
-        public static final int action_settings=0x7f090025;
+        public static final int action_settings=0x7f090027;
         public static final int bmapsView=0x7f09001f;
         public static final int bmapsresultView=0x7f090023;
         public static final int busline_detail=0x7f090020;
+        public static final int busline_textview=0x7f090024;
         public static final int button_end=0x7f090021;
         public static final int button_set=0x7f090001;
         public static final int detail_area=0x7f090006;
@@ -123,7 +124,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int detail_name=0x7f090005;
         public static final int detail_time=0x7f090008;
         public static final int distance=0x7f090018;
-        public static final int edittext_search=0x7f090010;
+        public static final int edittext_search=0x7f09000c;
         public static final int imageView1=0x7f090019;
         public static final int listView_main=0x7f090000;
         public static final int listView_myroute=0x7f09000a;
@@ -135,18 +136,19 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int picture_pos=0x7f090016;
         public static final int pos_detail=0x7f090009;
         public static final int position_name=0x7f090017;
+        public static final int refresh=0x7f090025;
         public static final int route_date=0x7f09001a;
         public static final int route_detail=0x7f09001b;
-        public static final int search=0x7f09000f;
+        public static final int search=0x7f090010;
         public static final int search_address=0x7f09001d;
-        public static final int search_cinema=0x7f09000c;
-        public static final int search_coffee=0x7f09000e;
-        public static final int search_ktv=0x7f09000d;
+        public static final int search_cinema=0x7f09000d;
+        public static final int search_coffee=0x7f09000f;
+        public static final int search_ktv=0x7f09000e;
         public static final int search_name=0x7f09001c;
         public static final int search_rest=0x7f09000b;
         public static final int search_tel=0x7f09001e;
         public static final int stoptime=0x7f090013;
-        public static final int tabsText=0x7f090024;
+        public static final int tabsText=0x7f090026;
         public static final int test_text=0x7f090022;
         public static final int textView1=0x7f090014;
         public static final int textView_time=0x7f090012;
