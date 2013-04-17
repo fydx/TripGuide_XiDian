@@ -92,12 +92,15 @@ public class DestinationActivity extends Activity {
 	
 	}
 
-	@Override
+/*	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.destination, menu);
+		
 		return true;
-	}
+	} */
+	
+
 	//listview 加载的adapter
 	public class ImageSimpleAdapter extends SimpleAdapter {
 		private int[] mTo;

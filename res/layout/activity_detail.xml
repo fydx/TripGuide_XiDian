@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="选为起点" />
+        android:text="选为终点" />
 
     <ImageView
         android:id="@+id/pic_detail_bottom"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
  	  android:background="@drawable/textview_style_gray"
         android:layout_below="@+id/pic_detail_bottom"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="18dp"
         android:text="详情" />
 

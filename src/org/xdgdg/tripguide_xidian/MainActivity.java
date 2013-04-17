@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -38,6 +39,22 @@ public class MainActivity extends TabActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, AboutActivity.class);
+			startActivity(intent);
+			break;
+
+		default:
+			break;
+		}
+		return false;
+		
 	}
 
 	/*private void setupTab(final View view, final String tag) {

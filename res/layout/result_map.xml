@@ -15,13 +15,12 @@
         android:background="@drawable/textview_style"
         android:text="路线" />
 
-  
 <Button
     android:id="@+id/refresh"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
     android:text="刷新" />
 
 </RelativeLayout>
