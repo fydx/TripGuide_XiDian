@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="180dp" 
+    android:background="@drawable/listitem_bg">
 
-    <ImageView
+  <!--
+  <ImageView
         android:id="@+id/listitem_bg"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/listitem_bg" />
+          -->  
 
     <ImageView
         android:id="@+id/picture_pos"
